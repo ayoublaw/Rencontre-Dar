@@ -6,7 +6,6 @@ import org.hibernate.SessionFactory;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
-import java.util.List;
 
 public class Dao<E> implements IDao<E> {
     private final Class<E> clazz;
@@ -41,5 +40,16 @@ public class Dao<E> implements IDao<E> {
         s.getTransaction().commit();
         s.close();
         return null;
+    }
+
+    @Override
+    public E remove(E e) {
+        SessionFactory factory = HibernateUtil.getSessionFactory();
+        Session s = factory.openSession();
+        s.beginTransaction();
+        s.delete(e);
+        s.getTransaction().commit();
+        s.close();
+        return e;
     }
 }

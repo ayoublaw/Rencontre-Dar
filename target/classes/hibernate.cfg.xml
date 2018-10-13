@@ -30,5 +30,9 @@
 
         <mapping class="Model.Entity.Users" />
         <mapping class="Model.Entity.Address" />
+        <mapping class="Model.Entity.CentreInt" />
+        <mapping class="Model.Entity.Evenement" />
+        <mapping class="Model.Entity.SignalCompte" />
+        <mapping class="Model.Entity.Evenement_Participant" />
     </session-factory>
 </hibernate-configuration>

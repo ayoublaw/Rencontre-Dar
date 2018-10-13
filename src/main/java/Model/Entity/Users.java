@@ -1,11 +1,14 @@
 package Model.Entity;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "Users",uniqueConstraints = @UniqueConstraint(columnNames = {"name","prenom"}))
 public class Users implements Serializable {
 
     @Id
@@ -13,10 +16,10 @@ public class Users implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column
+    @Column(name = "nom")
     private String nom;
 
-    @Column
+    @Column(name = "prenom")
     private String Prenom;
 
     @Column
@@ -29,22 +32,28 @@ public class Users implements Serializable {
     @Column
     private int  Age;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "user")
     private List<Address> address;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "users")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "users")
     private List<CentreInt> CentreInteret;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user_create_signal")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "user_create_signal")
     private List<SignalCompte> Created_Signal;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user_signal")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "user_signal")
     private List<SignalCompte> users_signals;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user_create")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "user_create")
     private List<Evenement> Evenement_create;
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "user_participate")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "user_participate")
     private List<Evenement_Participant> user_participation;
 
     public List<Address> getAddress() {

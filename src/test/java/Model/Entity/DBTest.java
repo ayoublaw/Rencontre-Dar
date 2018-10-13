@@ -14,6 +14,9 @@ public class DBTest {
     for (Address adr : user.getAddress() ){
         System.out.println(adr.getId()); }
     }
+    @Test
+    public void AllTablesTest(){
+    }
 
 
 
