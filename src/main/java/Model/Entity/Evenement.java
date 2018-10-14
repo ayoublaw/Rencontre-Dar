@@ -8,6 +8,10 @@ import java.util.List;
 @Table(name = "Evenement")
 public class Evenement implements Serializable {
 
+    public static enum Etat {
+        Invitation,AttendAcceptation,Complet,Expirer
+    }
+
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,6 +25,19 @@ public class Evenement implements Serializable {
 
     @Column
     private int Lieu;
+
+    @Column
+    private Etat etat;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    public Etat getEtat() {
+        return etat;
+    }
+
+    public void setEtat(Etat etat) {
+        this.etat = etat;
+    }
 
     @ManyToOne
     private Users user_create;

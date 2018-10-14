@@ -8,8 +8,12 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "Users",uniqueConstraints = @UniqueConstraint(columnNames = {"name","prenom"}))
+@Table(name = "Users",uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
 public class Users implements Serializable {
+
+    public static enum Etat{
+        Actif,Suspendu
+    }
 
     @Id
     @Column
@@ -31,6 +35,14 @@ public class Users implements Serializable {
 
     @Column
     private int  Age;
+
+    @Column
+    private String email;
+
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private Etat etat;
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "user")
@@ -55,6 +67,63 @@ public class Users implements Serializable {
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "user_participate")
     private List<Evenement_Participant> user_participation;
+
+    public List<Evenement_Participant> getUser_participation() {
+        return user_participation;
+    }
+
+    public void setUser_participation(List<Evenement_Participant> user_participation) {
+        this.user_participation = user_participation;
+    }
+
+    public List<Evenement> getEvenement_create() {
+        return Evenement_create;
+    }
+
+    public void setEvenement_create(List<Evenement> evenement_create) {
+        Evenement_create = evenement_create;
+    }
+
+    public List<SignalCompte> getUsers_signals() {
+        return users_signals;
+    }
+
+    public void setUsers_signals(List<SignalCompte> users_signals) {
+        this.users_signals = users_signals;
+    }
+
+    public List<CentreInt> getCentreInteret() {
+        return CentreInteret;
+    }
+
+    public void setCentreInteret(List<CentreInt> centreInteret) {
+        CentreInteret = centreInteret;
+    }
+
+    public List<SignalCompte> getCreated_Signal() {
+        return Created_Signal;
+    }
+
+    public void setCreated_Signal(List<SignalCompte> created_Signal) {
+        Created_Signal = created_Signal;
+    }
+
+    public Etat getEtat() {
+        return etat;
+    }
+
+    public void setEtat(Etat etat) {
+        this.etat = etat;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
 
     public List<Address> getAddress() {
         return address;
