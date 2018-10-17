@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,8 +36,9 @@ public class AuthentificationFilter implements Filter {
         if (isExcludedURL) {
             chain.doFilter(request, response);
         } else {
-            HttpSession session = request.getSession(false);
-            if (session == null || session.getAttribute("username") == null) {
+            HttpSession session;
+            session = request.getSession(false);
+            if (session == null || session.getAttribute("Email") == null) {
                 response.sendRedirect(request.getContextPath() + "/login");
             } else {
                 chain.doFilter(request, response);
@@ -46,8 +48,11 @@ public class AuthentificationFilter implements Filter {
     }
 
     public void init(FilterConfig config) throws ServletException {
+        ExcludUrls = new ArrayList<>();
         loginPage = config.getInitParameter("loginPage");
         Collections.addAll(ExcludUrls, config.getInitParameter("ExcludesUrls").split(";"));
+
+
     }
 
 }

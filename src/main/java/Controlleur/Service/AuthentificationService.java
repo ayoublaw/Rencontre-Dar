@@ -33,6 +33,8 @@ public class AuthentificationService {
         user.setPassword(hashedPassword);
         user.setAge(age);
         user.setEmail(Email);
+        user.setNom(nom);
+        user.setEtat(Users.Etat.Actif);
         DaoFactory.getUsersDao().Save(user);
         return user;
     }
