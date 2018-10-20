@@ -15,8 +15,10 @@ import java.io.IOException;
 
 @WebServlet(name = "LoginServlet", urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
+
      AuthentificationService auth = new AuthentificationService();
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
          String email = request.getParameter("email");
          String password = request.getParameter("password");
 
