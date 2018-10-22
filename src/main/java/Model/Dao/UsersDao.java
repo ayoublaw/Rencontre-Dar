@@ -16,6 +16,7 @@ public class UsersDao extends Dao<Users> {
         Query q = session.createQuery(query);
         q.setParameter("x",Nom).setParameter("y",prenom);
         Users user = q.list().size() == 0 ? null : (Users) q.list().get(0);
+        session.close();
         return user;
     }
 
@@ -26,6 +27,7 @@ public class UsersDao extends Dao<Users> {
         Query q = session.createQuery(query);
         q.setParameter("x",Email);
         Users user = q.list().size() == 0 ? null : (Users) q.list().get(0);
+        session.close();
         return user;
     }
 

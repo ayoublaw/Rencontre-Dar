@@ -6,6 +6,9 @@ import Model.Entity.Address;
 import Model.Entity.CentreInt;
 import Model.Entity.Users;
 import com.google.common.hash.Hashing;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -67,5 +70,12 @@ public class AuthentificationService {
             DaoFactory.getAddressDao().Save(adr);
             DaoFactory.getUsersDao().update(user);
         return adr;
+    }
+    public Users CurrentUser(HttpServletRequest request) throws DataException {
+        HttpSession session = request.getSession(true);
+        if(session.isNew()){
+        throw new DataException("You are not connecting");
+        }
+        return DaoFactory.getUsersDao().GetUserByEmail((String) session.getAttribute("Email"));
     }
 }

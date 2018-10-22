@@ -3,6 +3,7 @@ package Controlleur.Servlet;
 import Controlleur.Exception.DataException;
 import Controlleur.Service.AuthentificationService;
 import Model.Entity.Users;
+import com.google.gson.JsonObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,7 +32,13 @@ public class RegisterServlet extends HttpServlet {
             session.setAttribute("Email",Email);
             response.sendRedirect("/");
         } catch (DataException e) {
-            response.getWriter().write(e.getMessage());
+            JsonObject json = new JsonObject();
+            json.addProperty("erreur",e.toString());
+            String re = json.toString();
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.setStatus(404);
+            response.getWriter().write(re);
         }
     }
 

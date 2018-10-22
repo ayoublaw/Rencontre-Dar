@@ -3,6 +3,9 @@ package Controlleur.Servlet;
 import Controlleur.Exception.DataException;
 import Controlleur.Service.AuthentificationService;
 import Model.Entity.Users;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.mysql.fabric.xmlrpc.Client;
 
 import javax.servlet.ServletException;
@@ -28,9 +31,14 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("Email",email);
             response.sendRedirect("/");
         } catch (DataException e) {
-            System.out.println(email);
-            System.out.println(password);
-            response.getWriter().write(e.getMessage());
+            JsonObject json = new JsonObject();
+            json.addProperty("erreur",e.toString());
+            String r = json.toString();
+            response.setStatus(404);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(r);
+
         }
         }
 
