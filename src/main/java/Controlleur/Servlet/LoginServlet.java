@@ -29,6 +29,7 @@ public class LoginServlet extends HttpServlet {
             Users client = auth.Checklogin(email,password);
             HttpSession session = request.getSession(true);
             session.setAttribute("Email",email);
+            session.setAttribute("Role",client.getRole());
             response.sendRedirect("/");
         } catch (DataException e) {
             JsonObject json = new JsonObject();

@@ -27,10 +27,12 @@ public class AddSignalCompteServlet extends HttpServlet {
         try {
             Users currentUser = auth.CurrentUser(request);
             sign.AddSignalCompte(nom,prenom,currentUser,description);
+            response.setStatus(200);
             response.getWriter().write("Good");
 
         } catch (DataException e) {
             e.printStackTrace();
+            response.setStatus(400);
             response.getWriter().write("False");
         }
     }

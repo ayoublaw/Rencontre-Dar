@@ -30,6 +30,7 @@ public class RegisterServlet extends HttpServlet {
             Users client = auth.register(Email,nom,prenom,age,sex,password);
             HttpSession session = request.getSession(true);
             session.setAttribute("Email",Email);
+            session.setAttribute("Role",client.getRole());
             response.sendRedirect("/");
         } catch (DataException e) {
             JsonObject json = new JsonObject();

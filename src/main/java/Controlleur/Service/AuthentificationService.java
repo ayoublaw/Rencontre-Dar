@@ -38,6 +38,7 @@ public class AuthentificationService {
         user.setEmail(Email);
         user.setNom(nom);
         user.setEtat(Users.Etat.Actif);
+        user.setRole(Users.Roles.User);
         DaoFactory.getUsersDao().Save(user);
         return user;
     }
