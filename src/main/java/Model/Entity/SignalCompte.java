@@ -15,16 +15,6 @@ public class SignalCompte implements Serializable {
     @Column
     private String Name;
 
-    @Column
-    private String Email;
-
-    public String getEmail() {
-        return Email;
-    }
-
-    public void setEmail(String email) {
-        Email = email;
-    }
 
     @ManyToOne
     @JoinColumn(name="User_created")

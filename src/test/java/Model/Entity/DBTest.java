@@ -10,12 +10,12 @@ import java.util.List;
 public class DBTest {
     @Test
     public void UsersAddressTest(){
-    Users user = DaoFactory.getUsersDao().getById(1);
-    for (Address adr : user.getAddress() ){
-        System.out.println(adr.getId()); }
-    }
+    Users user = DaoFactory.getUsersDao().GetUserByEmail("Ayoublaw123@gmail.com");
+        System.out.println(user.getPassword()); }
+
     @Test
     public void AllTablesTest(){
+
     }
 
 

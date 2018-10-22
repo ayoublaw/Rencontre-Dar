@@ -1,11 +1,15 @@
 package Model.Dao;
 
 import Util.HibernateUtil;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Dao<E> implements IDao<E> {
     private final Class<E> clazz;
@@ -52,4 +56,14 @@ public class Dao<E> implements IDao<E> {
         s.close();
         return e;
     }
+    @Override
+    public List<E> selectAll() {
+        SessionFactory factory = HibernateUtil.getSessionFactory();
+        Session s = factory.openSession();
+        Query q = s.createQuery("from " + clazz.getSimpleName());
+        List<E> list = q.list();
+        s.close();
+        return list;
+    }
+
 }
