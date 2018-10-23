@@ -23,11 +23,11 @@ public class RegisterServlet extends HttpServlet {
         String prenom = request.getParameter("prenom");
         int age = Integer.parseInt(request.getParameter("age"));
         String sex = request.getParameter("sex");
-
+        String[] centreInt = request.getParameterValues("centreInt");
 
 
         try {
-            Users client = auth.register(Email,nom,prenom,age,sex,password);
+            Users client = auth.register(Email,nom,prenom,age,sex,password,centreInt);
             HttpSession session = request.getSession(true);
             session.setAttribute("Email",Email);
             session.setAttribute("Role",client.getRole());

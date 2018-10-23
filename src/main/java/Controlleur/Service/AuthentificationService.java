@@ -10,6 +10,7 @@ import com.google.common.hash.Hashing;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,7 +25,7 @@ public class AuthentificationService {
         return user;
     }
 
-    public Users register(String Email,String nom,String Prenom,int age,String sex,String password) throws DataException {
+    public Users register(String Email,String nom,String Prenom,int age,String sex,String password,String[] centreInt) throws DataException {
         String hashedPassword = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
 
         if(DaoFactory.getUsersDao().GetUserByEmail(Email) != null){
@@ -40,6 +41,17 @@ public class AuthentificationService {
         user.setEtat(Users.Etat.Actif);
         user.setRole(Users.Roles.User);
         DaoFactory.getUsersDao().Save(user);
+
+        List<CentreInt> listCentreInt = new ArrayList<CentreInt>();
+        for (String s :centreInt){
+            CentreInt centreint = new CentreInt();
+            centreint.setUsers(user);
+            centreint.setName(s);
+            listCentreInt.add(centreint);
+            DaoFactory.getCenterIntDao().Save(centreint);
+        }
+        user.setCentreInteret(listCentreInt);
+        DaoFactory.getUsersDao().update(user);
         return user;
     }
 
