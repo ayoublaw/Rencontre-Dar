@@ -1,7 +1,11 @@
 package Model.Entity;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -27,10 +31,48 @@ public class Evenement implements Serializable {
     private int Lieu;
 
     @Column
-    private Etat etat;
+    private Date date;
+
 
     @Enumerated(EnumType.STRING)
     @Column
+    private Etat etat;
+
+
+    @ManyToOne
+    private Users user_create;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "evenement")
+    private List<Evenement_Participant> users_participate;
+
+    @ManyToOne
+    private CentreInt centreInt;
+
+    public CentreInt getCentreInt() {
+        return centreInt;
+    }
+
+    public void setCentreInt(CentreInt centreInt) {
+        this.centreInt = centreInt;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public Etat getEtat() {
         return etat;
     }
@@ -38,13 +80,6 @@ public class Evenement implements Serializable {
     public void setEtat(Etat etat) {
         this.etat = etat;
     }
-
-    @ManyToOne
-    private Users user_create;
-
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "evenement")
-    private List<Evenement_Participant> users_participate;
-
 
     public List<Evenement_Participant> getUsers_participate() {
         return users_participate;

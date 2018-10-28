@@ -2,6 +2,7 @@ package Controlleur.Servlet;
 
 import Controlleur.Exception.DataException;
 import Controlleur.Service.AuthentificationService;
+import Controlleur.Service.JsonService;
 import Controlleur.Service.SignalCompteService;
 import Model.Dao.DaoFactory;
 import Model.Entity.SignalCompte;
@@ -27,13 +28,10 @@ public class AddSignalCompteServlet extends HttpServlet {
         try {
             Users currentUser = auth.CurrentUser(request);
             sign.AddSignalCompte(nom,prenom,currentUser,description);
-            response.setStatus(200);
-            response.getWriter().write("Good");
-
+            JsonService.StringJsonResponse(response,"text","message bien envoyer");
         } catch (DataException e) {
-            e.printStackTrace();
-            response.setStatus(400);
-            response.getWriter().write("False");
+            JsonService.ErrJsonResponse(response,e);
+
         }
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

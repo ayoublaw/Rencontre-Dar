@@ -20,6 +20,11 @@ public class SignalCompte implements Serializable {
     @JoinColumn(name="User_created")
     private Users user_create_signal;
 
+
+    @ManyToOne
+    @JoinColumn(name="User_signal")
+    private Users user_signal;
+
     public String getName() {
         return Name;
     }
@@ -44,9 +49,6 @@ public class SignalCompte implements Serializable {
         this.user_signal = user_signal;
     }
 
-    @ManyToOne
-    @JoinColumn(name="User_signal")
-    private Users user_signal;
 
 
 }

@@ -1,5 +1,7 @@
 package Model.Entity;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -10,21 +12,27 @@ public class Address implements Serializable {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Expose
     private int Id;
 
     @Column
+    @Expose
     private String Nom;
 
     @Column
+    @Expose
     private int Numero;
 
     @Column
+    @Expose
     private String Rue;
 
     @Column
+    @Expose
     private String Ville;
 
     @Column
+    @Expose
     private int CodePostal;
 
     @ManyToOne
