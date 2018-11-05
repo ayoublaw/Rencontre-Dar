@@ -2,6 +2,7 @@ package Controlleur.Servlet;
 
 import Controlleur.Exception.DataException;
 import Controlleur.Service.AuthentificationService;
+import Controlleur.Service.JsonService;
 import Model.Entity.Users;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -29,15 +30,10 @@ public class LoginServlet extends HttpServlet {
             Users client = auth.Checklogin(email,password);
             HttpSession session = request.getSession(true);
             session.setAttribute("Email",email);
+            session.setAttribute("Role",client.getRole());
             response.sendRedirect("/");
         } catch (DataException e) {
-            JsonObject json = new JsonObject();
-            json.addProperty("erreur",e.toString());
-            String r = json.toString();
-            response.setStatus(404);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(r);
+            JsonService.ErrJsonResponse(response,e);
 
         }
         }

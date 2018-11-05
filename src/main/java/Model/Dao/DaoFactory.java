@@ -1,9 +1,6 @@
 package Model.Dao;
 
-import Model.Entity.CentreInt;
-import Model.Entity.Evenement;
-import Model.Entity.Evenement_Participant;
-import Model.Entity.SignalCompte;
+import Model.Entity.*;
 
 public class DaoFactory {
 
@@ -13,6 +10,7 @@ public class DaoFactory {
     private static EvenementDao EvenementDao;
     private static EvenementParticipantDao EvenementParticipantDao;
     private static SignalCompteDao SignalCompteDao;
+    private static LieuProposerDao LieuProposer;
 
     public static UsersDao getUsersDao(){
         if(usersDao == null)
@@ -35,7 +33,7 @@ public class DaoFactory {
         }
         return EvenementDao;
     }
-    public static EvenementParticipantDao getEvenemenytParticipantDao(){
+    public static EvenementParticipantDao getEvenementParticipantDao(){
         if(EvenementParticipantDao == null){
             EvenementParticipantDao = new EvenementParticipantDao();
         }
@@ -46,5 +44,11 @@ public class DaoFactory {
             SignalCompteDao = new SignalCompteDao();
         }
         return SignalCompteDao;
+    }
+    public static LieuProposerDao getLieuProposer(){
+        if(LieuProposer == null){
+            LieuProposer = new LieuProposerDao();
+        }
+        return LieuProposer;
     }
 }

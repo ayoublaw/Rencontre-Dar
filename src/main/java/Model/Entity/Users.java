@@ -14,6 +14,9 @@ public class Users implements Serializable {
     public static enum Etat{
         Actif,Suspendu
     }
+    public static enum Roles{
+        User,Admin
+    }
 
     @Id
     @Column
@@ -43,6 +46,19 @@ public class Users implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column
     private Etat etat;
+
+    public Roles getRole() {
+        return role;
+    }
+
+    public void setRole(Roles role) {
+        this.role = role;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private Roles role;
+
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "user")

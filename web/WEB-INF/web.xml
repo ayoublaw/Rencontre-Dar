@@ -15,6 +15,10 @@
             <param-name>ExcludesUrls</param-name>
             <param-value>/login;/register</param-value>
         </init-param>
+        <init-param>
+            <param-name>AdminPath</param-name>
+            <param-value>/admin</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>AuthentificationFilter</filter-name>

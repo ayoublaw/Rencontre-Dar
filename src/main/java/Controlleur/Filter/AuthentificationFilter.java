@@ -14,6 +14,7 @@ import java.util.List;
 @WebFilter(filterName = "AuthentificationFilter")
 public class AuthentificationFilter implements Filter {
     public String loginPage = "";
+    public String AdminPage = "";
     public List<String> ExcludUrls;
     public void destroy() {
     }
@@ -33,7 +34,18 @@ public class AuthentificationFilter implements Filter {
 
         System.out.println(request.getRequestURL());
 
-        if (isExcludedURL) {
+        if(request.getRequestURL().indexOf(AdminPage) > -1){
+            HttpSession session;
+            session = request.getSession(false);
+            if(session == null || session.getAttribute("Email") == null || !session.getAttribute("Role").equals("Admin")){
+                response.sendRedirect(request.getContextPath() + "/");
+            }
+            else{
+                chain.doFilter(request, response);
+            }
+        }
+        else{
+        if(isExcludedURL) {
             chain.doFilter(request, response);
         } else {
             HttpSession session;
@@ -44,12 +56,14 @@ public class AuthentificationFilter implements Filter {
                 chain.doFilter(request, response);
             }
         }
+        }
 
     }
 
     public void init(FilterConfig config) throws ServletException {
         ExcludUrls = new ArrayList<>();
         loginPage = config.getInitParameter("loginPage");
+        AdminPage = config.getInitParameter("AdminPath");
         Collections.addAll(ExcludUrls, config.getInitParameter("ExcludesUrls").split(";"));
 
 
