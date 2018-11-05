@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EvenementDao extends Dao<Evenement> {
     public List<Evenement_Participant> getUserEvenement(Users user){
@@ -16,13 +17,18 @@ public class EvenementDao extends Dao<Evenement> {
         return  user.getUser_participation();
     }
     public List<Evenement> EvenementNowWithSomeCentreInteret(Users user){
-        SessionFactory factory = HibernateUtil.getSessionFactory();
-        Session s = factory.openSession();
-        Query q = s.createQuery("select t from "+ Evenement.class.getSimpleName()+" t where etat = :x and centreInt in :y" );
-        q.setParameter("x", Evenement.Etat.Invitation).setParameter("y",user.getCentreInteret());
-        List<Evenement> list = q.list();
-        s.close();
-
-        return list;
+        List<String> list = user.getCentreInteret().stream().map(r -> r.getName()).collect(Collectors.toList());
+        return this.selectAll().stream().filter(r->r.getEtat().equals(Evenement.Etat.Invitation)).filter(r -> list.contains(r.getCentreInt().getName())).collect(Collectors.toList());
+    }
+    public List<Evenement> GetEvenementActifCreateByUser(Users user){
+        return user.getEvenement_create().stream().filter(r -> !r.getEtat().equals(Evenement.Etat.Expirer))
+                .collect(Collectors.toList());
+    }
+    public List<Evenement> GetEvenementActifParticipateByUser(Users user){
+        return user.getUser_participation().stream().filter(r -> !r.getEvenement().getEtat().equals(Evenement.Etat.Expirer))
+                .map(x ->x.getEvenement()).collect(Collectors.toList());
+    }
+    public List<Evenement> GetEvenementEtatAttendAcceptation(Users user){
+        return user.getEvenement_create().stream().filter(r -> r.getEtat().equals(Evenement.Etat.AttendAcceptation)).collect(Collectors.toList());
     }
 }

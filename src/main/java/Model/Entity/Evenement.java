@@ -28,7 +28,7 @@ public class Evenement implements Serializable {
     private int NbrParticipant;
 
     @Column
-    private int Lieu;
+    private String Lieu;
 
     @Column
     private Date date;
@@ -45,6 +45,18 @@ public class Evenement implements Serializable {
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "evenement")
     private List<Evenement_Participant> users_participate;
+
+    @ElementCollection
+    @Column
+    private List<String> LieuProposé;
+
+    public List<String> getLieuProposé() {
+        return LieuProposé;
+    }
+
+    public void setLieuProposé(List<String> lieuProposé) {
+        LieuProposé = lieuProposé;
+    }
 
     @ManyToOne
     private CentreInt centreInt;
@@ -113,11 +125,11 @@ public class Evenement implements Serializable {
         NbrParticipant = nbrParticipant;
     }
 
-    public int getLieu() {
+    public String getLieu() {
         return Lieu;
     }
 
-    public void setLieu(int lieu) {
+    public void setLieu(String lieu) {
         Lieu = lieu;
     }
 

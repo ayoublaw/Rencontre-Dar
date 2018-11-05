@@ -1,5 +1,6 @@
 package Controlleur.Service;
 
+import Controlleur.Exception.DataException;
 import Model.Dao.DaoFactory;
 import Model.Entity.SignalCompte;
 import Model.Entity.Users;
@@ -22,7 +23,7 @@ public class SignalCompteServiceTest {
     }
 
     @Test
-    public void listSignalCompte() {
+    public void listSignalCompte() throws DataException {
         List<SignalCompte> s = sign.ListSignalCompte();
         Assert.assertEquals(s.get(0).getName(),"blablablablabla");
     }

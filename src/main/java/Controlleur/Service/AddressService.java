@@ -54,7 +54,7 @@ public class AddressService {
     }
     public List<Address> getUserAddress(Users user) throws DataException {
         List<Address> adr = DaoFactory.getAddressDao().selectUser(user);
-        if(adr.isEmpty()){
+        if(adr == null || adr.isEmpty()){
             throw new DataException("You don't have any Address");
         }
         return adr;

@@ -89,6 +89,13 @@ public class AuthentificationService {
         if(session.isNew()){
         throw new DataException("You are not connecting");
         }
-        return DaoFactory.getUsersDao().GetUserByEmail((String) session.getAttribute("Email"));
+        Users user =  DaoFactory.getUsersDao().GetUserByEmail((String) session.getAttribute("Email"));
+        if(user == null){
+            throw new DataException("User not exist");
+        }
+        if(user.getEtat().equals(Users.Etat.Suspendu)){
+            throw new DataException("you are Suspendu");
+        }
+        return user;
     }
 }

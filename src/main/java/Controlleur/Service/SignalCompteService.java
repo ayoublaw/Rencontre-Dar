@@ -1,5 +1,6 @@
 package Controlleur.Service;
 
+import Controlleur.Exception.DataException;
 import Model.Dao.DaoFactory;
 import Model.Entity.SignalCompte;
 import Model.Entity.Users;
@@ -16,8 +17,12 @@ public class SignalCompteService {
         DaoFactory.getSignalCompte().Save(signalCompte);
         return signalCompte;
     }
-    public List<SignalCompte> ListSignalCompte(){
-     return DaoFactory.getSignalCompte().selectAll();
+    public List<SignalCompte> ListSignalCompte() throws DataException {
+     List<SignalCompte> list =DaoFactory.getSignalCompte().selectAll();
+     if(list == null || list.isEmpty()){
+         throw new DataException("SignalCompte is empty");
+     }
+     return list;
     }
     public void ConfirmSignalCompte(String nom,String prenom){
         Users user = DaoFactory.getUsersDao().GetUserByName(nom,prenom);
