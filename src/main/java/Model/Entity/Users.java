@@ -47,14 +47,6 @@ public class Users implements Serializable {
     @Column
     private Etat etat;
 
-    public Roles getRole() {
-        return role;
-    }
-
-    public void setRole(Roles role) {
-        this.role = role;
-    }
-
     @Enumerated(EnumType.STRING)
     @Column
     private Roles role;
@@ -197,4 +189,13 @@ public class Users implements Serializable {
     public int getId() {
         return id;
     }
+
+    public Roles getRole() {
+        return role;
+    }
+
+    public void setRole(Roles role) {
+        this.role = role;
+    }
+
 }

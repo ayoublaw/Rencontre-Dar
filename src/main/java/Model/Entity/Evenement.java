@@ -1,5 +1,6 @@
 package Model.Entity;
 
+import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -19,27 +20,34 @@ public class Evenement implements Serializable {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Expose
     private int id;
 
     @Column
+    @Expose
     private String Description;
 
     @Column
+    @Expose
     private int NbrParticipant;
 
     @Column
+    @Expose
     private String Lieu;
 
     @Column
+    @Expose
     private Date date;
 
 
     @Enumerated(EnumType.STRING)
     @Column
+    @Expose
     private Etat etat;
 
 
     @ManyToOne
+    @Expose
     private Users user_create;
 
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -48,7 +56,12 @@ public class Evenement implements Serializable {
 
     @ElementCollection
     @Column
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @Expose
     private List<String> LieuProposé;
+
+    @ManyToOne
+    private CentreInt centreInt;
 
     public List<String> getLieuProposé() {
         return LieuProposé;
@@ -58,8 +71,6 @@ public class Evenement implements Serializable {
         LieuProposé = lieuProposé;
     }
 
-    @ManyToOne
-    private CentreInt centreInt;
 
     public CentreInt getCentreInt() {
         return centreInt;

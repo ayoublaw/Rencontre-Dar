@@ -143,7 +143,7 @@ public class EvenementService {
             DaoFactory.getUsersDao().update(user);
         }
     }
-    public List<Evenement> GetAllProposition(Users user,int Evenement) throws DataException {
+    public List<Evenement> GetAllProposition(Users user) throws DataException {
         List<Evenement> list = DaoFactory.getEvenementDao().GetEvenementEtatAttendAcceptation(user);
         if(list == null || list.isEmpty()){
             throw new DataException("you don't have any Propositions");
