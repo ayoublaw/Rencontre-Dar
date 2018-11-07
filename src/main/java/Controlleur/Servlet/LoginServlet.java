@@ -4,10 +4,6 @@ import Controlleur.Exception.DataException;
 import Controlleur.Service.AuthentificationService;
 import Controlleur.Service.JsonService;
 import Model.Entity.Users;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.mysql.fabric.xmlrpc.Client;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

@@ -10,9 +10,8 @@ public class InitDB{
 @Test
 public void InitUserDB() throws DataException {
     AuthentificationService auth = new AuthentificationService();
-    auth.register("Test2@gmail.com","MOuh","Ayou",25,"M","336", new String[]{"Sport", "Musique"});
-    Assert.assertNotNull(DaoFactory.getUsersDao().GetUserByEmail("test2@gmail.com"));
-    Assert.assertNotNull(DaoFactory.getUsersDao().GetUserByEmail("test2@gmail.com").getCentreInteret());
-    Assert.assertEquals(DaoFactory.getCenterIntDao().selectAll().get(0).getName(),"Sport");
+    auth.register("ayoub+test@gmail.com","MOuh","Ayou",25,"M","336", new String[]{"Sport", "Musique"});
+    Assert.assertNotNull(DaoFactory.getUsersDao().GetUserByEmail("ayoub+test@gmail.com"));
+    Assert.assertNotNull(DaoFactory.getUsersDao().GetUserByEmail("ayoub+test@gmail.com").getCentreInteret());
 }
 }
