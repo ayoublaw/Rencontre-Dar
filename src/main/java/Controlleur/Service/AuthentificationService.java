@@ -43,12 +43,14 @@ public class AuthentificationService {
         DaoFactory.getUsersDao().Save(user);
 
         List<CentreInt> listCentreInt = new ArrayList<CentreInt>();
-        for (String s :centreInt){
-            CentreInt centreint = new CentreInt();
-            centreint.setUsers(user);
-            centreint.setName(s);
-            listCentreInt.add(centreint);
-            DaoFactory.getCenterIntDao().Save(centreint);
+        if(centreInt != null) {
+            for (String s : centreInt) {
+                CentreInt centreint = new CentreInt();
+                centreint.setUsers(user);
+                centreint.setName(s);
+                listCentreInt.add(centreint);
+                DaoFactory.getCenterIntDao().Save(centreint);
+            }
         }
         user.setCentreInteret(listCentreInt);
         DaoFactory.getUsersDao().update(user);

@@ -15,7 +15,7 @@ public class HibernateUtil {
             if (DATABASE_URL != null && !DATABASE_URL.isEmpty()) {
 
                 URI dbUri = new URI(DATABASE_URL);
-                String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+                String dbUrl = System.getenv("JDBC_DATABASE_URL");
                 String username = dbUri.getUserInfo().split(":")[0];
                 String password = dbUri.getUserInfo().split(":")[1];
                 System.out.println(dbUrl);
@@ -30,7 +30,7 @@ public class HibernateUtil {
             }
 
             StandardServiceRegistryBuilder registry = new StandardServiceRegistryBuilder();
-            registry.applySettings(configuration.getProperties());
+            registry.configure("hibernate.cfg.xml").applySettings(configuration.getProperties());
             ServiceRegistry serviceRegistry = registry.build();
 
             return configuration.buildSessionFactory(serviceRegistry);
