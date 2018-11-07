@@ -11,11 +11,13 @@ import java.util.List;
 @Table(name = "Users",uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
 public class Users implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     public static enum Etat{
         Actif,Suspendu
     }
     public static enum Roles{
-        User,Admin
+        Utilisateur,Admin
     }
 
     @Id

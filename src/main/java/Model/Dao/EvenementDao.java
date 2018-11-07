@@ -3,10 +3,6 @@ package Model.Dao;
 import Model.Entity.Evenement;
 import Model.Entity.Evenement_Participant;
 import Model.Entity.Users;
-import Util.HibernateUtil;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;

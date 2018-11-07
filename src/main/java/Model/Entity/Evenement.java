@@ -13,6 +13,8 @@ import java.util.List;
 @Table(name = "Evenement")
 public class Evenement implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     public static enum Etat {
         Invitation,AttendAcceptation,Complet,Expirer
     }

@@ -39,7 +39,7 @@ public class AuthentificationService {
         user.setEmail(Email);
         user.setNom(nom);
         user.setEtat(Users.Etat.Actif);
-        user.setRole(Users.Roles.User);
+        user.setRole(Users.Roles.Utilisateur);
         DaoFactory.getUsersDao().Save(user);
 
         List<CentreInt> listCentreInt = new ArrayList<CentreInt>();

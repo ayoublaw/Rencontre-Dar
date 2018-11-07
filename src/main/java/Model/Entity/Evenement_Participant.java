@@ -7,6 +7,8 @@ import java.io.Serializable;
 @Table(name = "Evenement_Participant")
 public class Evenement_Participant implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)

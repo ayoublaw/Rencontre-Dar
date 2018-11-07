@@ -12,6 +12,8 @@ import java.util.List;
 @Table(name = "CentreInteret")
 public class CentreInt implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
