@@ -11,7 +11,7 @@ public class HibernateUtil {
     private static SessionFactory buildSessionFactory() {
         try {
             Configuration configuration = new Configuration().configure();
-            final String DATABASE_URL = System.getenv("JDBC_DATABASE_URL");
+            final String DATABASE_URL = System.getenv("DATABASE_URL");
             if (DATABASE_URL != null && !DATABASE_URL.isEmpty()) {
 
                 URI dbUri = new URI(DATABASE_URL);
