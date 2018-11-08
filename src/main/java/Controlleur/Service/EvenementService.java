@@ -14,19 +14,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class EvenementService {
-    public Evenement AddEvenement(Users user, String description, String Lieu, String nbrParticipants, String date, String centreint) throws ParseException, DataException {
+    public Evenement AddEvenement(Users user,String adr_proposer, String description, String Lieu, String nbrParticipants, String date, String centreint) throws ParseException, DataException {
         if(Integer.parseInt(nbrParticipants) != 1 && Lieu == null ){
             throw new DataException("Lieu not saised");
+        }
+        if(Integer.parseInt(nbrParticipants) == 1 && adr_proposer == null){
+            throw new DataException("Vous avez pas proposé une addresse");
         }
         Evenement e = new Evenement();
         CentreInt c = DaoFactory.getCenterIntDao().getbynameanduser(centreint,user);
         if(c == null){
             throw new DataException("Centre Interet not found");
         }
-
         e.setDescription(description);
         e.setEtat(Evenement.Etat.Invitation);
         e.setLieu(Lieu);
+        e.setAdr_Proposé(adr_proposer);
         e.setNbrParticipant(Integer.parseInt(nbrParticipants));
         e.setUser_create(user);
         e.setDate(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").parse(date));
