@@ -15,11 +15,9 @@ public class Evenement_Participant implements Serializable {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "user")
     private Users user_participate;
 
     @ManyToOne
-    @JoinColumn(name = "evenemrnt")
     private Evenement evenement;
 
     public Evenement getEvenement() {

@@ -38,7 +38,6 @@ public class Address implements Serializable {
     private int CodePostal;
 
     @ManyToOne
-    @JoinColumn(name="User")
     private Users user;
 
     public Address() {

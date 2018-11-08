@@ -19,12 +19,10 @@ public class SignalCompte implements Serializable {
 
 
     @ManyToOne
-    @JoinColumn(name="User_created")
     private Users user_create_signal;
 
 
     @ManyToOne
-    @JoinColumn(name="User_signal")
     private Users user_signal;
 
     public String getName() {
