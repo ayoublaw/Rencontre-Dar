@@ -15,7 +15,7 @@ public class Address implements Serializable {
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Expose
-    private int Id;
+    private Integer Id;
 
     @Column
     @Expose
@@ -38,7 +38,6 @@ public class Address implements Serializable {
     private int CodePostal;
 
     @ManyToOne
-    @JoinColumn(name="User")
     private Users user;
 
     public Address() {

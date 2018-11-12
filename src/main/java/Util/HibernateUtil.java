@@ -1,9 +1,9 @@
 package Util;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
 
 import java.net.URI;
 
@@ -11,7 +11,7 @@ public class HibernateUtil {
     private static SessionFactory buildSessionFactory() {
         try {
             Configuration configuration = new Configuration().configure();
-            final String DATABASE_URL = System.getenv("JDBC_DATABASE_URL");
+            final String DATABASE_URL = System.getenv("DATABASE_URL");
             if (DATABASE_URL != null && !DATABASE_URL.isEmpty()) {
 
                 URI dbUri = new URI(DATABASE_URL);
@@ -29,9 +29,10 @@ public class HibernateUtil {
                 configuration.getProperties().list(System.out);
             }
 
-            StandardServiceRegistryBuilder registry = new StandardServiceRegistryBuilder();
-            registry.configure("hibernate.cfg.xml").applySettings(configuration.getProperties());
-            ServiceRegistry serviceRegistry = registry.build();
+
+            ServiceRegistryBuilder registry = new ServiceRegistryBuilder();
+            registry.applySettings(configuration.getProperties());
+            ServiceRegistry serviceRegistry = registry.buildServiceRegistry();
 
             return configuration.buildSessionFactory(serviceRegistry);
 

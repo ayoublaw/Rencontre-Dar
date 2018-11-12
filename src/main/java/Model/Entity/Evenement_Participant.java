@@ -12,14 +12,12 @@ public class Evenement_Participant implements Serializable {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "user")
     private Users user_participate;
 
     @ManyToOne
-    @JoinColumn(name = "evenemrnt")
     private Evenement evenement;
 
     public Evenement getEvenement() {

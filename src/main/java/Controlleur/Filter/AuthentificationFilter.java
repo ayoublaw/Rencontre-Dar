@@ -22,8 +22,6 @@ public class AuthentificationFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
-
-
         boolean isExcludedURL = false;
         for (String excludedURL : ExcludUrls) {
             if (request.getRequestURL().indexOf(excludedURL) > -1) {
@@ -45,14 +43,15 @@ public class AuthentificationFilter implements Filter {
             }
         }
         else{
-        if(isExcludedURL) {
+          if(isExcludedURL) {
             chain.doFilter(request, response);
-        } else {
+           } else {
             HttpSession session;
             session = request.getSession(false);
             if (session == null || session.getAttribute("Email") == null) {
                 response.sendRedirect(request.getContextPath() + "/login");
             } else {
+                System.out.println(session.getAttribute("Email"));
                 chain.doFilter(request, response);
             }
         }

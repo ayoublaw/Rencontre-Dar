@@ -23,7 +23,7 @@ public class Evenement implements Serializable {
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Expose
-    private int id;
+    private Integer id;
 
     @Column
     @Expose
@@ -37,6 +37,18 @@ public class Evenement implements Serializable {
     @Expose
     private String Lieu;
 
+    public String getAdr_Proposé() {
+        return Adr_Proposé;
+    }
+
+    public void setAdr_Proposé(String adr_Proposé) {
+        Adr_Proposé = adr_Proposé;
+    }
+
+    @Column
+    @Expose
+    private String Adr_Proposé;
+
     @Column
     @Expose
     private Date date;
@@ -46,7 +58,6 @@ public class Evenement implements Serializable {
     @Column
     @Expose
     private Etat etat;
-
 
     @ManyToOne
     @Expose
