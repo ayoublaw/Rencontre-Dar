@@ -24,7 +24,7 @@ public class APIServiceTest {
     }
     @Test
     public void APIDirectionsTest() throws ParseException {
-        String json =api.GetPlaceDirections("5 rue paul dautier 78140","142 Rue Montmatre 75005",new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").parse("10/11/2018 22:30:00").getTime());
+        String json =api.GetPlaceDirections("5 rue paul dautier 78140","142 Rue Montmatre 75005");
         System.out.println(json);
         Assert.assertNotNull(json);
     }

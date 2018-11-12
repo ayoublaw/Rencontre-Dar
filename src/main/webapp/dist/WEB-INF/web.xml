@@ -13,7 +13,7 @@
         </init-param>
         <init-param>
             <param-name>ExcludesUrls</param-name>
-            <param-value>/login;/register</param-value>
+            <param-value>/login;/register;/css/;/js/;</param-value>
         </init-param>
         <init-param>
             <param-name>AdminPath</param-name>

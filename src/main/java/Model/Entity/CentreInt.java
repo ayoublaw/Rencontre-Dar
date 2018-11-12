@@ -17,7 +17,7 @@ public class CentreInt implements Serializable {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
 
     @Column
     private String Name;

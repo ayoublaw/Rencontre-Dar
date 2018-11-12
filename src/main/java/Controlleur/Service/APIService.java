@@ -69,7 +69,7 @@ public class APIService {
         JSONObject json = this.GetJsonFromUrl("https://maps.googleapis.com/maps/api/place/details/json?placeid="+place_id+"&fields=address_component,adr_address,alt_id,formatted_address,geometry,icon,id,name,permanently_closed,photo,place_id,plus_code,scope,type,url,utc_offset,vicinity&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es\n");
         return json.toString();
     }
-    public String GetPlaceDirections(String adr1, String adr2, Date date){
+    public String GetPlaceDirections(String adr1, String adr2){
         JSONObject json = this.GetJsonFromUrl("https://maps.googleapis.com/maps/api/directions/json?origin="+adr1+"&destination="+adr2+"&mode=transit&transit_mode=rail&arrival_time&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es\n");
         return json.toString();
     }

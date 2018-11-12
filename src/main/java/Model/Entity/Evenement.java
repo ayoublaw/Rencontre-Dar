@@ -23,7 +23,7 @@ public class Evenement implements Serializable {
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Expose
-    private int id;
+    private Integer id;
 
     @Column
     @Expose

@@ -9,10 +9,18 @@ public class SignalCompte implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column
     private String Name;

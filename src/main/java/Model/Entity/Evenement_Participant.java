@@ -12,7 +12,7 @@ public class Evenement_Participant implements Serializable {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
 
     @ManyToOne
     private Users user_participate;

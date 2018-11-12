@@ -15,7 +15,7 @@ public class Address implements Serializable {
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Expose
-    private int Id;
+    private Integer Id;
 
     @Column
     @Expose

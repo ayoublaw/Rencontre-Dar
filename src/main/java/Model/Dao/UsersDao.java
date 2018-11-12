@@ -23,11 +23,14 @@ public class UsersDao extends Dao<Users> {
     }
 
     public Users GetUserByEmail(String Email){
-        List<Users> list =selectAll().stream().filter(r ->r.getEmail().equals(Email)).collect(Collectors.toList());
-        if(list.isEmpty()){
-            return  null;
-        }
-        return list.get(0);
+        String query = "from "+Users.class.getSimpleName()+" where email = :x ";
+        SessionFactory factory = HibernateUtil.getSessionFactory();
+        Session session = factory.openSession();
+        Query q = session.createQuery(query);
+        q.setParameter("x",Email);
+        Users user = q.list().size() == 0 ? null : (Users) q.list().get(0);
+        session.close();
+        return user;
     }
 
 

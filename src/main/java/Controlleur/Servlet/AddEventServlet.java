@@ -27,9 +27,11 @@ public class AddEventServlet extends HttpServlet {
         String nbrParticipants = request.getParameter("nbrParticipants");
         String date = request.getParameter("date");
         String CentreInt = request.getParameter("CentreInt");
+        String adr_proposer = request.getParameter("adr_proposer");
+
         try {
             Users currentUser = auth.CurrentUser(request);
-            even.AddEvenement(currentUser, decription, lieu, nbrParticipants, date, CentreInt);
+            even.AddEvenement(currentUser,adr_proposer, decription, lieu, nbrParticipants, date, CentreInt);
 
             JsonObject jsonO = new JsonObject();
             jsonO.addProperty("Text","Address bien enregistré");
