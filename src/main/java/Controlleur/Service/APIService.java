@@ -27,7 +27,6 @@ public class APIService {
             while ((line = br.readLine()) != null) {
                     tmp += line;
                 }
-            System.out.println(tmp);
             JSONObject obj = new JSONObject(tmp);
             conn.disconnect();
             return obj;
@@ -63,7 +62,7 @@ public class APIService {
             return null;
         }
         JSONArray resultas = (JSONArray) resu.get("results");
-        return resultas.toString();
+        return limitArray(resultas,3).toString();
     }
     public String GetPlaceDetails(String place_id){
         JSONObject json = this.GetJsonFromUrl("https://maps.googleapis.com/maps/api/place/details/json?placeid="+place_id+"&fields=address_component,adr_address,alt_id,formatted_address,geometry,icon,id,name,permanently_closed,photo,place_id,plus_code,scope,type,url,utc_offset,vicinity&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es\n");
@@ -72,5 +71,12 @@ public class APIService {
     public String GetPlaceDirections(String adr1, String adr2){
         JSONObject json = this.GetJsonFromUrl("https://maps.googleapis.com/maps/api/directions/json?origin="+adr1+"&destination="+adr2+"&mode=transit&transit_mode=rail&arrival_time&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es\n");
         return json.toString();
+    }
+    public JSONArray limitArray(JSONArray array ,int limit){
+        JSONArray json =new JSONArray();
+        for (int i = 0; i < limit; i++) {
+            json.put(array.getJSONObject(i));
+        }
+        return json;
     }
 }

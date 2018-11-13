@@ -8,6 +8,7 @@ import Model.Entity.Evenement;
 import Model.Entity.Users;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import org.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,19 +23,20 @@ public class AddEventServlet extends HttpServlet {
     AuthentificationService auth = new AuthentificationService();
     EvenementService even = new EvenementService();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String decription = request.getParameter("description");
-        String lieu = request.getParameter("lieu");
-        String nbrParticipants = request.getParameter("nbrParticipants");
-        String date = request.getParameter("date");
-        String CentreInt = request.getParameter("CentreInt");
-        String adr_proposer = request.getParameter("adr_proposer");
+        JSONObject jsonobj =JsonService.getJsonObjectFromBufferReader(request.getReader());
+        String decription = jsonobj.getString("description");
+        String lieu = jsonobj.getString("lieu");
+        String nbrParticipants = jsonobj.getString("nbrParticipants");
+        String date = jsonobj.getString("date");
+        String CentreInt = jsonobj.getString("CentreInt");
+        String adr_proposer = jsonobj.getString("adr_proposer");
 
         try {
             Users currentUser = auth.CurrentUser(request);
             even.AddEvenement(currentUser,adr_proposer, decription, lieu, nbrParticipants, date, CentreInt);
 
             JsonObject jsonO = new JsonObject();
-            jsonO.addProperty("Text","Address bien enregistré");
+            jsonO.addProperty("message","Address bien enregistré");
             String json = new Gson().toJson(jsonO);
 
             response.setContentType("application/json");

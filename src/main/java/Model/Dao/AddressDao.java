@@ -13,7 +13,7 @@ public class AddressDao extends Dao<Address> {
     public List<Address> selectUser(Users user) {
         SessionFactory factory = HibernateUtil.getSessionFactory();
         Session s = factory.openSession();
-        Query q = s.createQuery("select t from "+Address.class.getSimpleName()+" t where User = :x" );
+        Query q = s.createQuery("select t from "+Address.class.getSimpleName()+" t where User_id = :x" );
         q.setParameter("x",user.getId());
         List<Address> list = q.list();
         s.close();

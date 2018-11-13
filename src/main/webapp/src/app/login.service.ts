@@ -32,7 +32,8 @@ export class LoginService {
           console.log('Error', error);
         });
     }
-  register(email: String, password: String, nom: String, prenom: String, age: String, sex: String, centreInt: String[]) {return this.http.post(this.urlRegister, { email: email, password: password, nom: nom, prenom: prenom, age: age, sex: sex, centreInt: centreInt} , httpOptions)
+  register(email: String, password: String, nom: String, prenom: String, age: String, sex: String, centreInt: String[]) {
+    return this.http.post(this.urlRegister, { email: email, password: password, nom: nom, prenom: prenom, age: age, sex: sex, centreInt: centreInt} , httpOptions)
       .pipe(catchError(this.handleError('register', [])))
       .subscribe(data => {
           this.router.navigate(['/dashboard']);
