@@ -21,6 +21,9 @@ public class EvenementService {
         if(Integer.parseInt(nbrParticipants) == 1 && adr_proposer == null){
             throw new DataException("Vous avez pas proposé une addresse");
         }
+        if(adr_proposer == null || description == null || date == null || centreint == null){
+            throw new DataException("Remplir tous les champs");
+        }
         Evenement e = new Evenement();
         CentreInt c = DaoFactory.getCenterIntDao().getbynameanduser(centreint,user);
         if(c == null){
@@ -32,7 +35,7 @@ public class EvenementService {
         e.setAdr_Proposé(adr_proposer);
         e.setNbrParticipant(Integer.parseInt(nbrParticipants));
         e.setUser_create(user);
-        e.setDate(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").parse(date));
+        e.setDate(new SimpleDateFormat("yyyy-MM-DD'T'HH:mm").parse(date));
         e.setCentreInt(c);
         DaoFactory.getEvenementDao().Save(e);
         return e;

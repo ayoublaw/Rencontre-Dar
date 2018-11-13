@@ -44,8 +44,10 @@ public class AddEventServlet extends HttpServlet {
             response.setStatus(200);
             response.getWriter().write(json);
 
-        } catch (DataException | ParseException e) {
-            JsonService.ErrJsonResponse(response, (DataException) e);
+        } catch (DataException e) {
+            JsonService.ErrJsonResponse(response, e);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 

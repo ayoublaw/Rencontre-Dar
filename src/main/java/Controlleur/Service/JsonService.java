@@ -13,7 +13,7 @@ import java.io.IOException;
 public class JsonService {
     public static void ErrJsonResponse(HttpServletResponse response, DataException e) throws IOException {
         JsonObject jsonO = new JsonObject();
-        jsonO.addProperty("Err",e.toString());
+        jsonO.addProperty("message",e.toString());
         String json = new Gson().toJson(jsonO);
 
         response.setContentType("application/json");

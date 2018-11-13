@@ -14,7 +14,7 @@ public class EvenementDao extends Dao<Evenement> {
     }
     public List<Evenement> EvenementNowWithSomeCentreInteret(Users user){
         List<String> list = user.getCentreInteret().stream().map(r -> r.getName()).collect(Collectors.toList());
-        return this.selectAll().stream().filter(r->r.getEtat().equals(Evenement.Etat.Invitation)).filter(r -> list.contains(r.getCentreInt().getName())).collect(Collectors.toList());
+        return this.selectAll().stream().filter(r->r.getEtat().equals(Evenement.Etat.Invitation)).filter(r -> list.contains(r.getCentreInt().getName())).filter(r -> r.getUser_create().getEmail().equals(user.getEmail())).collect(Collectors.toList());
     }
     public List<Evenement> GetEvenementActifCreateByUser(Users user){
         return user.getEvenement_create().stream().filter(r -> !r.getEtat().equals(Evenement.Etat.Expirer))

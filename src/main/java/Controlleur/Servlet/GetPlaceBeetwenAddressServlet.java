@@ -2,6 +2,8 @@ package Controlleur.Servlet;
 
 import Controlleur.Service.APIService;
 import Controlleur.Service.AuthentificationService;
+import Controlleur.Service.JsonService;
+import org.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,9 +17,10 @@ public class GetPlaceBeetwenAddressServlet extends HttpServlet {
     AuthentificationService auth = new AuthentificationService();
     APIService api =new APIService();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String adr1 = request.getParameter("adr1");
-        String adr2 = request.getParameter("adr2");
-        String type = request.getParameter("type");
+        JSONObject jsonobj = JsonService.getJsonObjectFromBufferReader(request.getReader());
+        String adr1 = jsonobj.getString("adr1");
+        String adr2 = jsonobj.getString("adr2");
+        String type = jsonobj.getString("type");
         String results = api.GetPLaceBeetwenTwoAddress(adr1,adr2,type);
         response.setContentType("application/json");
         response.setStatus(200);

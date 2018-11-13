@@ -1,6 +1,7 @@
 package Controlleur.Servlet;
 
 import Controlleur.Service.APIService;
+import Controlleur.Service.AuthentificationService;
 import Controlleur.Service.JsonService;
 import org.json.JSONObject;
 
@@ -11,14 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "GetPlaceNearbyServlet" , urlPatterns = "/GetPlaceNearby")
-public class GetPlaceNearbyServlet extends HttpServlet {
+@WebServlet(name = "GetdirectionsServlet",urlPatterns = "/Directions")
+public class GetdirectionsServlet extends HttpServlet {
+    AuthentificationService auth = new AuthentificationService();
     APIService api =new APIService();
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         JSONObject jsonobj = JsonService.getJsonObjectFromBufferReader(request.getReader());
-        String adr = jsonobj.getString("adr");
-        String type = jsonobj.getString("type");
-        String results = api.GetPlaceNearbyAddress(adr,type);
+        String adr1 = jsonobj.getString("adr1");
+        String adr2 = jsonobj.getString("adr2");
+        String results = api.GetPlaceDirections(adr1,adr2);
         response.setContentType("application/json");
         response.setStatus(200);
         response.setCharacterEncoding("UTF-8");

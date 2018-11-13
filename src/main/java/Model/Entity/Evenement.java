@@ -65,6 +65,7 @@ public class Evenement implements Serializable {
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "evenement")
+    @Expose
     private List<Evenement_Participant> users_participate;
 
     @ElementCollection

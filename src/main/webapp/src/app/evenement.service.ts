@@ -16,7 +16,9 @@ const httpOptions = {
 export class EvenementService {
   public MessageErr;
   private urlDemande = "/GetPlaceNearby";
-  private urlAdd = "/Addevent"
+  private urlAdd = "/Addevent";
+  private urlDir = "Directions";
+
   constructor(
     private http: HttpClient
   ) { }
@@ -33,7 +35,19 @@ export class EvenementService {
         tap(data => console.log(data)),
         catchError(this.handleError('getPlace'))
       )
-
+  }
+  directions(adr1: String,adr2: String){
+    return this.http.post(this.urlDir,{adr1: adr1,adr2: adr2})
+      .pipe(
+        tap(data => console.log(data)),
+    catchError(this.handleError('directions'))
+  )}
+  getEventCanParticipate() : Observable<any>{
+    return this.http.get('/CanPartcicipate')
+      .pipe(
+        tap(data => console.log(data)),
+        catchError(this.handleError('getevent'))
+      )
   }
   private handleError<T> (operation = 'operation', result?: T) {
     return (erreur: any): Observable<T> => {
@@ -41,7 +55,7 @@ export class EvenementService {
       // TODO: better job of transforming error for user consumption
       this.log(`${erreur.message}`);
 
-      console.log(`${erreur.message}`);
+      console.log(`${erreur}`);
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };

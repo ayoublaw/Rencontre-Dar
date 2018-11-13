@@ -11,6 +11,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ErrMessageComponent } from './err-message/err-message.component';
 import { CreateEvenementComponent } from './create-evenement/create-evenement.component';
 import { CreateAddressComponent } from './create-address/create-address.component';
+import { EvenementComponent } from './evenement/evenement.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CreateAddressComponent } from './create-address/create-address.componen
     DashboardComponent,
     ErrMessageComponent,
     CreateEvenementComponent,
-    CreateAddressComponent
+    CreateAddressComponent,
+    EvenementComponent
   ],
   imports: [
     BrowserModule,

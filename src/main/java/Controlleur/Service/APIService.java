@@ -50,14 +50,14 @@ public class APIService {
             return null;
         }
         JSONArray resultas = (JSONArray) resu.get("results");
-        return resultas.toString();
+        return limitArray(resultas,3).toString();
     }
     public String GetPlaceNearbyAddress(String adr,String type){
-       JSONObject json = this.GetJsonFromUrl("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input="+adr+"&inputtype=textquery&fields=geometry/location&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es\n");
+       JSONObject json = this.GetJsonFromUrl("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input="+adr+"&inputtype=textquery&language=fr&fields=geometry/location&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es\n");
         Double lat = (Double) json.getJSONArray("candidates").getJSONObject(0).getJSONObject("geometry").getJSONObject("location").get("lat");
         Double lng = (Double) json.getJSONArray("candidates").getJSONObject(0).getJSONObject("geometry").getJSONObject("location").get("lng");
 
-        JSONObject resu = this.GetJsonFromUrl("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=1500&type="+type+"&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es\n");
+        JSONObject resu = this.GetJsonFromUrl("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=1500&language=fr&type="+type+"&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es\n");
         if(resu == null){
             return null;
         }
@@ -70,6 +70,7 @@ public class APIService {
     }
     public String GetPlaceDirections(String adr1, String adr2){
         JSONObject json = this.GetJsonFromUrl("https://maps.googleapis.com/maps/api/directions/json?origin="+adr1+"&destination="+adr2+"&mode=transit&transit_mode=rail&arrival_time&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es\n");
+        json.put("adr",adr1);
         return json.toString();
     }
     public JSONArray limitArray(JSONArray array ,int limit){
