@@ -1,143 +1,103 @@
 <div class="steamline">
   <hr>
-  <div >
-  <div class="sl-item">
-    <div >
-      <div class="m-l-40"> <a href="#" class="text-info">John Doe</a> <span class="sl-date">5 minutes ago</span>
+  <div *ngIf="eventService.MessageErr != null" class="alert alert-danger">{{ evenService.MessageErr }}</div>
+  <div *ngIf="MessageAcc != null" class="alert alert-success">{{ MessageAcc }}</div>
+  <div *ngIf="ListEvent == null">
+    <p>On a Pas d'evenement a vous Proposer</p>
+  </div>
+  <div *ngFor="let event of ListEvent">
+  <div *ngIf="event.NbrParticipant > 2" class="sl-item">
+      <div class="m-l-40">
+        <a class="text-info">{{ event.user_create.nom}} {{ event.user_create.prenom }}</a> <span class="sl-date">{{ event.date}}</span>
         <div class="m-t-20 row">
           <div class="col-md-2 col-xs-12"><img src="" alt="user" class="img-responsive" /></div>
           <div class="col-md-9 col-xs-12">
-            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa</p>
-            <a href="#" class="btn btn-info pull-2"> Design weblayout</a><br>
-            <a href="#" class="btn btn-success pull-right"> Design weblayout</a>
+            <p> {{ event.Description}}</p>
+            <div class="col-md-9 col-xs-12">
+              <input type="text" #AdrCherchehaut class="form-control form-control-line" placeholder="Saisie Address">
+            </div>
+            <div class="col-md-2 col-xs-12">
+              <a (click)="directions(AdrCherchehaut.value,event.Lieu)"  class="btn btn-info">Rechercher Place </a>
+            </div>
+            <a (click)="Participate(event.id,null)" class="btn btn-success pull-right"> Participer</a>
           </div>
         </div>
-        <div class="m-t-20 row" >
-          <div class="col-md-2 col-xs-12"></div>
-          <div class="col-md-9 col-xs-12">
+        <div *ngIf="Directions != null && Directions.adr == AdrCherchehaut.value" class="m-t-20 row" >
+         <div *ngFor="let leg of Directions.routes.legs">
+           <div class="col-md-2 col-xs-12"></div>
+           <div class="col-md-9 col-xs-12">
             <div>
               <div class="col-md-4 col-xs-12">
-                <div><strong>distance : </strong><p> 33 KM</p></div>
-                <div><strong>distance : </strong><p> 33 KM</p></div>
+                <div><strong>Duration : </strong><p> {{leg.duration.text}}</p></div>
+                <div><strong>Distance : </strong><p> {{leg.distance.text}}</p></div>
               </div>
               <div class="col-md-7 col-xs-12">
-                <strong>Trajet :  </strong>
-                <p>
+                <strong> Trajet :  </strong>
+                <p *ngFor="let step of leg.steps">
+                  <i *ngIf="step.travel_mode === 'WALKING'" class="material-icons">directions_walk</i>
+                  <span *ngIf="step.travel_mode === 'TRANSIT' && step.transit_details.line.vehicle.local_icon == null"> <img [src]="step.transit_details.line.vehicle.local_icon"> </span>
+                  <span *ngIf="step.travel_mode === 'TRANSIT' && step.transit_details.line.vehicle.local_icon != null"> <img [src]="step.transit_details.line.vehicle.icon"> </span>
+                  <span *ngIf="step.travel_mode === 'TRANSIT'" style="color: #ffffff ;background-color: {{step.transit_details.line.text_color}}"> {{ step.transit_details.line.short_name}} </span>
+                  <span> {{step.duration.text}} </span>
                   <span> > </span>
-                  <span> <img src="test"> </span>
-                  <span> > </span>
-                  <span style="background-color: #bb0a23"> test </span>
                 </p>
               </div>
           </div>
+           </div>
+         </div>
         </div>
       </div>
-    </div>
-  </div>
   </div>
   <hr>
-  <div class="sl-item">
-    <div>
-      <div class="m-l-40"><a href="#" class="text-info">John Doe</a> <span class="sl-date">5 minutes ago</span>
-      <div class="m-t-20">
-        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper </p>
-         <div class="col-md-9 col-xs-12">
-           <input type="text" class="form-control form-control-line" placeholder="Saisie Address">
-         </div>
-         <div class="col-md-2 col-xs-12">
-           <a class="btn btn-success">Rechercher Place </a>
-         </div>
-       </div>
-      <div class="m-l-20"> <a href="#" class="text-info">John Doe</a> <span class="sl-date">5 minutes ago</span>
-          <div class="m-t-20 row">
-            <div class="col-md-2 col-xs-12"><img src="" alt="user" class="img-responsive" /></div>
-            <div class="col-md-9 col-xs-12">
-              <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa</p>
-              <a class="btn btn-info pull-2" [class.disabled]="isClickedOnce" (click)="isClickedOnce = true"> Design weblayout</a><br>
-            </div>
-          </div>
-          <div class="m-t-20 row" >
-            <div class="col-md-2 col-xs-12"></div>
-            <div class="col-md-9 col-xs-12">
-              <div>
-                <div class="col-md-4 col-xs-12">
-                  <div><strong>distance : </strong><p> 33 KM</p></div>
-                  <div><strong>distance : </strong><p> 33 KM</p></div>
-                </div>
-                <div class="col-md-7 col-xs-12">
-                  <strong>Trajet :  </strong>
-                  <p>
-                    <span> > </span>
-                    <span> <img src="test"> </span>
-                    <span> > </span>
-                    <span style="background-color: #bb0a23"> test </span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+  <div *ngIf="event.NbrParticipant == 2" class="sl-item">
+      <div class="m-l-40">
+      <a class="text-info">{{ event.user_create.nom}} {{ event.user_create.prenom }}</a> <span class="sl-date">{{ event.date}}</span>
+      <div class="m-t-40">
+        <p> {{ event.Description}}</p>
+        <div class="col-md-9 col-xs-12">
+          <input type="text" #AdrCherchebas class="form-control form-control-line" placeholder="Saisie Address">
         </div>
-        <div class="m-l-20"> <a href="#" class="text-info">John Doe</a> <span class="sl-date">5 minutes ago</span>
-          <div class="m-t-20 row">
-            <div class="col-md-2 col-xs-12"><img src="" alt="user" class="img-responsive" /></div>
-            <div class="col-md-9 col-xs-12">
-              <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa</p>
-              <a class="btn btn-info pull-2" [class.disabled]="isClickedOnce" (click)="isClickedOnce = true"> Design weblayout</a><br>
-            </div>
-          </div>
-          <div class="m-t-20 row" >
-            <div class="col-md-2 col-xs-12"></div>
-            <div class="col-md-9 col-xs-12">
-              <div>
-                <div class="col-md-4 col-xs-12">
-                  <div><strong>distance : </strong><p> 33 KM</p></div>
-                  <div><strong>distance : </strong><p> 33 KM</p></div>
-                </div>
-                <div class="col-md-7 col-xs-12">
-                  <strong>Trajet :  </strong>
-                  <p>
-                    <span> > </span>
-                    <span> <img src="test"> </span>
-                    <span> > </span>
-                    <span style="background-color: #bb0a23"> test </span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="col-md-2 col-xs-12">
+          <a (click)="getPlacesBeetwen(event.Lieu,AdrCherchebas.value,event.centerInt.name)"  class="btn btn-info">Rechercher Place </a>
         </div>
-        <div class="m-l-20"> <a href="#" class="text-info">John Doe</a> <span class="sl-date">5 minutes ago</span>
-          <div class="m-t-20 row">
-            <div class="col-md-2 col-xs-12"><img src="" alt="user" class="img-responsive" /></div>
-            <div class="col-md-9 col-xs-12">
-              <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa</p>
-              <a class="btn btn-info pull-2" [class.disabled]="isClickedOnce" (click)="isClickedOnce = true"> Design weblayout</a><br>
-            </div>
-          </div>
-          <div class="m-t-20 row" >
-            <div class="col-md-2 col-xs-12"></div>
-            <div class="col-md-9 col-xs-12">
-              <div>
-                <div class="col-md-4 col-xs-12">
-                  <div><strong>distance : </strong><p> 33 KM</p></div>
-                  <div><strong>distance : </strong><p> 33 KM</p></div>
-                </div>
-                <div class="col-md-7 col-xs-12">
-                  <strong>Trajet :  </strong>
-                  <p>
-                    <span> > </span>
-                    <span> <img src="test"> </span>
-                    <span> > </span>
-                    <span style="background-color: #bb0a23"> test </span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
-    </div>
+      <div *ngFor="let place of placesBeetwen" class="m-l-20">
+        <input type="Radio" [(ngModel)]="RadioModel" name="RadioModel" value="{{place.vicinity}}">
+        <a  class="text-info">{{place.name}}</a> <span class="sl-date">{{place.rating}}/5</span>
+          <div class="m-t-20 row">
+            <div class="col-md-2 col-xs-12"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={{place.photos[0].photo_reference}}&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es" alt="user" class="img-responsive" /></div>
+            <div class="col-md-9 col-xs-12">
+              <p><strong>Address :</strong> {{place.vicinity}} </p>
+              <a class="btn btn-info pull-2" [class.disabled]="isClickedOnce" (click)="isClickedOnce = true;directions(AdrCherchebas.value,event.Lieu)"> Design weblayout</a><br>
+            </div>
+          </div>
+        <div *ngIf="Directions != null && Directions.adr == AdrCherchebas.value" class="m-t-20 row" >
+          <div *ngFor="let leg of Directions.routes.legs">
+            <div class="col-md-2 col-xs-12"></div>
+            <div class="col-md-9 col-xs-12">
+              <div>
+                <div class="col-md-4 col-xs-12">
+                  <div><strong>Duration : </strong><p> {{leg.duration.text}}</p></div>
+                  <div><strong>Distance : </strong><p> {{leg.distance.text}}</p></div>
+                </div>
+                <div class="col-md-7 col-xs-12">
+                  <strong> Trajet :  </strong>
+                  <p *ngFor="let step of leg.steps">
+                    <i *ngIf="step.travel_mode === 'WALKING'" class="material-icons">directions_walk</i>
+                    <span *ngIf="step.travel_mode === 'TRANSIT' && step.transit_details.line.vehicle.local_icon == null"> <img [src]="step.transit_details.line.vehicle.local_icon"> </span>
+                    <span *ngIf="step.travel_mode === 'TRANSIT' && step.transit_details.line.vehicle.local_icon != null"> <img [src]="step.transit_details.line.vehicle.icon"> </span>
+                    <span *ngIf="step.travel_mode === 'TRANSIT'" style="color: #ffffff ;background-color: {{step.transit_details.line.text_color}}"> {{ step.transit_details.line.short_name}} </span>
+                    <span> {{step.duration.text}} </span>
+                    <span> > </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <a (click)="Participate(event.id,RadioModel)" class="btn btn-success pull-right"> Participer</a>
+      </div>
   </div>
   <hr>
   </div>

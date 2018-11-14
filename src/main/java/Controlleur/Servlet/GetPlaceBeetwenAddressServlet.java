@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "GetPlaceBeetwenAddressServlet")
+@WebServlet(name = "GetPlaceBeetwenAddressServlet" ,urlPatterns = "/getPlaceBeetwen")
 public class GetPlaceBeetwenAddressServlet extends HttpServlet {
     AuthentificationService auth = new AuthentificationService();
     APIService api =new APIService();

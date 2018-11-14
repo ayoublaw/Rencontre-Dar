@@ -50,7 +50,7 @@ public class EvenementService {
         }
         return listEvenements;
     }
-    public Evenement_Participant ParticipateInEvenement(Users user,int EvenementId,String[] lieu) throws DataException {
+    public Evenement_Participant ParticipateInEvenement(Users user,int EvenementId,String lieu) throws DataException {
         Evenement evenement = DaoFactory.getEvenementDao().getById(EvenementId);
         if(evenement == null){
             throw new DataException("Evenement not exists");
@@ -73,7 +73,7 @@ public class EvenementService {
         if(evenement.getNbrParticipant() == evenement.getUsers_participate().size()){
             if(evenement.getNbrParticipant() == 1){
                 evenement.setEtat(Evenement.Etat.AttendAcceptation);
-                evenement.setLieuProposé(Arrays.asList(lieu));
+                evenement.setAdr_Proposé(lieu);
             }
             else{
                 evenement.setEtat(Evenement.Etat.Complet);

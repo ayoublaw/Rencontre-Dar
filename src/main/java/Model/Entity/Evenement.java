@@ -71,10 +71,10 @@ public class Evenement implements Serializable {
     @ElementCollection
     @Column
     @LazyCollection(LazyCollectionOption.FALSE)
-    @Expose
     private List<String> LieuProposé;
 
     @ManyToOne
+    @Expose
     private CentreInt centreInt;
 
     public List<String> getLieuProposé() {

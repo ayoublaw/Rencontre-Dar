@@ -49,6 +49,20 @@ export class EvenementService {
         catchError(this.handleError('getevent'))
       )
   }
+  getPlaceBeetwenAdr(adr1: String,adr2: String,type: String){
+    return this.http.post('//getPlaceBeetwen',{adr1:adr1,adr2:adr2,type:type})
+      .pipe(
+        tap(data => console.log(data)),
+        catchError(this.handleError('getPlace'))
+      )
+  }
+  Participe(Id: String,lieu:String) : Observable<any>{
+    return this.http.post('Participate',{Id:Id,lieu:lieu})
+      .pipe(
+        tap(data =>console.log(data)),
+        catchError(this.handleError('paricipate'))
+      )
+  }
   private handleError<T> (operation = 'operation', result?: T) {
     return (erreur: any): Observable<T> => {
       // log to console instead

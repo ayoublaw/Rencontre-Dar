@@ -8,6 +8,9 @@ import {EvenementService} from "../evenement.service";
 })
 export class EvenementComponent implements OnInit {
   ListEvent: any;
+  Directions: any;
+  placesBeetwen: any;
+  MessageAcc; String;
   constructor(
     public eventService: EvenementService
   ) { }
@@ -19,5 +22,18 @@ export class EvenementComponent implements OnInit {
     this.eventService.getEventCanParticipate()
       .subscribe(data => this.ListEvent = data);
   }
+  directions(adr1: String,adr2: String){
+    this.eventService.directions(adr1,adr2)
+      .subscribe(data => this.Directions = data)
+  }
+  getPlacesBeetwen(adr1: String,adr2: String,type:String){
+    this.eventService.getPlaceBeetwenAdr(adr1,adr2,type)
+      .subscribe(data => this.placesBeetwen = data);;
+  }
+  Participate(Id:String,lieu:String){
+    this.eventService.Participe(Id,lieu)
+      .subscribe(data => this.MessageAcc = data.message)
+  }
+
 
 }
