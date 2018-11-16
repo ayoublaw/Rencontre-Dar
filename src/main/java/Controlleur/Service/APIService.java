@@ -1,5 +1,6 @@
 package Controlleur.Service;
 
+import Controlleur.Exception.DataException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -36,20 +37,31 @@ public class APIService {
         }
         return null;
     }
-    public String GetPLaceBeetwenTwoAddress(String adr1,String adr2,String type){
-        JSONObject json = this.GetJsonFromUrl("https://maps.googleapis.com/maps/api/directions/json?origin="+adr1+"&destination="+adr2+"&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es\n");
+    public String GetPLaceBeetwenTwoAddress(String adr1,String adr2,String type) throws DataException {
+        System.out.println("Adresse 1 Get place beetwen : "+adr1);
+        System.out.println("Adresse 2 Get place beetwen : "+adr2);
+        System.out.println("Type Get place beetwen : "+type);
+        JSONObject json = this.GetJsonFromUrl("https://maps.googleapis.com/maps/api/directions/json?origin="+adr1+"&destination="+adr2+"&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es");
+        if(json == null){
+            throw new DataException("Directions inconnu");
+        }
         JSONArray tab = (JSONArray) json.getJSONArray("routes").getJSONObject(0).getJSONArray("legs").getJSONObject(0).getJSONArray("steps");
+        if(tab == null || tab.length() == 0){
+            throw new DataException("les places dans la route not found");
+        }
         int iteration = tab.length()%2 == 0 ? tab.length()/2 : (tab.length()/2)+1;
-
 
         Double lat = (Double) tab.getJSONObject(iteration).getJSONObject("end_location").get("lat");
         Double lng = (Double) tab.getJSONObject(iteration).getJSONObject("end_location").get("lng");
 
-        JSONObject resu = this.GetJsonFromUrl("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=1500&type="+type+"&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es\n");
+        JSONObject resu = this.GetJsonFromUrl("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+lat+","+lng+"&radius=1500&type="+type+"&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es");
         if(resu == null){
-            return null;
+            throw new DataException("les places a coté found");
         }
         JSONArray resultas = (JSONArray) resu.get("results");
+        if(resultas.length() == 0){
+            throw new DataException("les resultas des places est vides");
+        }
         return limitArray(resultas,3).toString();
     }
     public String GetPlaceNearbyAddress(String adr,String type){
@@ -75,7 +87,11 @@ public class APIService {
     }
     public JSONArray limitArray(JSONArray array ,int limit){
         JSONArray json =new JSONArray();
+        if(array.length() <= limit){
+            return array;
+        }
         for (int i = 0; i < limit; i++) {
+
             json.put(array.getJSONObject(i));
         }
         return json;

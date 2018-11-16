@@ -5,6 +5,8 @@ import Controlleur.Service.AuthentificationService;
 import Controlleur.Service.EvenementService;
 import Controlleur.Service.JsonService;
 import Model.Entity.Users;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -20,11 +22,14 @@ public class ParticipateServlet extends HttpServlet {
     private EvenementService event = new EvenementService();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         JSONObject jsonobj = JsonService.getJsonObjectFromBufferReader(request.getReader());
-        String evenementID = jsonobj.getString("Id");
-        String lieu = (String) jsonobj.get("lieu");
+        Integer evenementID = jsonobj.getInt("Id");
+        String lieu =null;
+        if(jsonobj.get("lieu") != null) {
+            lieu =jsonobj.get("lieu") instanceof String ? (String) jsonobj.get("lieu") : null ;
+        }
         try {
             Users user = auth.CurrentUser(request);
-            event.ParticipateInEvenement(user,Integer.parseInt(evenementID),lieu);
+            event.ParticipateInEvenement(user,evenementID,lieu);
             JsonService.StringJsonResponse(response,"message","Participation Enregistré");
         } catch (DataException e) {
             JsonService.ErrJsonResponse(response,e);

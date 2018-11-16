@@ -17,22 +17,28 @@ export class EvenementComponent implements OnInit {
 
   ngOnInit() {
     this.getEventCanParticipate();
+    this.eventService.clean();
   }
   getEventCanParticipate(){
     this.eventService.getEventCanParticipate()
-      .subscribe(data => this.ListEvent = data);
+      .subscribe(data => {this.ListEvent = null; this.ListEvent = data});
   }
   directions(adr1: String,adr2: String){
+    this.Directions = null;
     this.eventService.directions(adr1,adr2)
       .subscribe(data => this.Directions = data)
   }
-  getPlacesBeetwen(adr1: String,adr2: String,type:String){
+  getPlacesBeetwen(adr1: String,adr2: String,type: String){
     this.eventService.getPlaceBeetwenAdr(adr1,adr2,type)
       .subscribe(data => this.placesBeetwen = data);;
   }
   Participate(Id:String,lieu:String){
+
     this.eventService.Participe(Id,lieu)
-      .subscribe(data => this.MessageAcc = data.message)
+      .subscribe(data => {
+      this.getEventCanParticipate();
+      this.MessageAcc = data.message;
+      })
   }
 
 

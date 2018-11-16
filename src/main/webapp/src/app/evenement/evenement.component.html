@@ -1,104 +1,128 @@
 <div class="steamline">
   <hr>
-  <div *ngIf="eventService.MessageErr != null" class="alert alert-danger">{{ evenService.MessageErr }}</div>
+  <div *ngIf="eventService.MessageErr != null && eventService.MessageErr !== undefined" class="alert alert-danger">{{ eventService.MessageErr }}</div>
   <div *ngIf="MessageAcc != null" class="alert alert-success">{{ MessageAcc }}</div>
   <div *ngIf="ListEvent == null">
     <p>On a Pas d'evenement a vous Proposer</p>
   </div>
   <div *ngFor="let event of ListEvent">
-  <div *ngIf="event.NbrParticipant > 2" class="sl-item">
+    <div *ngIf="event.NbrParticipant > 2" class="sl-item " style="height: auto; overflow: auto" >
       <div class="m-l-40">
         <a class="text-info">{{ event.user_create.nom}} {{ event.user_create.prenom }}</a> <span class="sl-date">{{ event.date}}</span>
         <div class="m-t-20 row">
-          <div class="col-md-2 col-xs-12"><img src="" alt="user" class="img-responsive" /></div>
+          <div class="col-md-2 col-xs-12">
+            <img src="" alt="user" class="img-responsive" />
+          </div>
           <div class="col-md-9 col-xs-12">
-            <p> {{ event.Description}}</p>
-            <div class="col-md-9 col-xs-12">
-              <input type="text" #AdrCherchehaut class="form-control form-control-line" placeholder="Saisie Address">
-            </div>
-            <div class="col-md-2 col-xs-12">
-              <a (click)="directions(AdrCherchehaut.value,event.Lieu)"  class="btn btn-info">Rechercher Place </a>
-            </div>
-            <a (click)="Participate(event.id,null)" class="btn btn-success pull-right"> Participer</a>
+            <p><strong>Description :</strong> {{ event.Description}}</p>
+            <p><strong>Nombre de Paticipant :</strong> {{event.users_participate.length }}/{{ event.NbrParticipant - 1}}</p>
+            <p><strong>Date : </strong> {{ event.date}}</p>
+            <p><strong>Lieu : </strong> {{ event.Lieu}}</p>
+            <p>Pour Cette evenement le créateur a déjà choisit le lieu.</p>
+            <p>Si vous voulez voir l'itenairire :</p>
           </div>
         </div>
-        <div *ngIf="Directions != null && Directions.adr == AdrCherchehaut.value" class="m-t-20 row" >
-         <div *ngFor="let leg of Directions.routes.legs">
-           <div class="col-md-2 col-xs-12"></div>
-           <div class="col-md-9 col-xs-12">
-            <div>
-              <div class="col-md-4 col-xs-12">
+        <div class="m-t-20 row">
+          <div class="col-md-2"></div>
+          <div class="col-md-7 col-xs-12">
+            <input type="text" #AdrCherchehaut class="form-control form-control-line" placeholder="Saisie Address">
+          </div>
+          <div class="col-md-2 col-xs-12" >
+            <a (click)="directions(event.Lieu,AdrCherchehaut.value)"  class="btn btn-info">Iteniraire </a>
+          </div>
+        </div>
+        <div *ngIf="Directions?.adr == event.Lieu" >
+          <div class="col-md-2"></div>
+          <div class="col-md-9" *ngFor="let route of Directions?.routes">
+            <div *ngFor="let leg of route.legs">
+              <div>
                 <div><strong>Duration : </strong><p> {{leg.duration.text}}</p></div>
                 <div><strong>Distance : </strong><p> {{leg.distance.text}}</p></div>
               </div>
-              <div class="col-md-7 col-xs-12">
-                <strong> Trajet :  </strong>
-                <p *ngFor="let step of leg.steps">
-                  <i *ngIf="step.travel_mode === 'WALKING'" class="material-icons">directions_walk</i>
-                  <span *ngIf="step.travel_mode === 'TRANSIT' && step.transit_details.line.vehicle.local_icon == null"> <img [src]="step.transit_details.line.vehicle.local_icon"> </span>
-                  <span *ngIf="step.travel_mode === 'TRANSIT' && step.transit_details.line.vehicle.local_icon != null"> <img [src]="step.transit_details.line.vehicle.icon"> </span>
-                  <span *ngIf="step.travel_mode === 'TRANSIT'" style="color: #ffffff ;background-color: {{step.transit_details.line.text_color}}"> {{ step.transit_details.line.short_name}} </span>
-                  <span> {{step.duration.text}} </span>
-                  <span> > </span>
-                </p>
-              </div>
-          </div>
-           </div>
-         </div>
-        </div>
-      </div>
-  </div>
-  <hr>
-  <div *ngIf="event.NbrParticipant == 2" class="sl-item">
-      <div class="m-l-40">
-      <a class="text-info">{{ event.user_create.nom}} {{ event.user_create.prenom }}</a> <span class="sl-date">{{ event.date}}</span>
-      <div class="m-t-40">
-        <p> {{ event.Description}}</p>
-        <div class="col-md-9 col-xs-12">
-          <input type="text" #AdrCherchebas class="form-control form-control-line" placeholder="Saisie Address">
-        </div>
-        <div class="col-md-2 col-xs-12">
-          <a (click)="getPlacesBeetwen(event.Lieu,AdrCherchebas.value,event.centerInt.name)"  class="btn btn-info">Rechercher Place </a>
-        </div>
-      </div>
-      <div *ngFor="let place of placesBeetwen" class="m-l-20">
-        <input type="Radio" [(ngModel)]="RadioModel" name="RadioModel" value="{{place.vicinity}}">
-        <a  class="text-info">{{place.name}}</a> <span class="sl-date">{{place.rating}}/5</span>
-          <div class="m-t-20 row">
-            <div class="col-md-2 col-xs-12"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={{place.photos[0].photo_reference}}&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es" alt="user" class="img-responsive" /></div>
-            <div class="col-md-9 col-xs-12">
-              <p><strong>Address :</strong> {{place.vicinity}} </p>
-              <a class="btn btn-info pull-2" [class.disabled]="isClickedOnce" (click)="isClickedOnce = true;directions(AdrCherchebas.value,event.Lieu)"> Design weblayout</a><br>
-            </div>
-          </div>
-        <div *ngIf="Directions != null && Directions.adr == AdrCherchebas.value" class="m-t-20 row" >
-          <div *ngFor="let leg of Directions.routes.legs">
-            <div class="col-md-2 col-xs-12"></div>
-            <div class="col-md-9 col-xs-12">
               <div>
-                <div class="col-md-4 col-xs-12">
-                  <div><strong>Duration : </strong><p> {{leg.duration.text}}</p></div>
-                  <div><strong>Distance : </strong><p> {{leg.distance.text}}</p></div>
-                </div>
-                <div class="col-md-7 col-xs-12">
-                  <strong> Trajet :  </strong>
-                  <p *ngFor="let step of leg.steps">
+                <strong> Trajet :  </strong>
+                <div style="display: inline-block">
+                  <div *ngFor="let step of leg.steps" style="display: inline-block">
                     <i *ngIf="step.travel_mode === 'WALKING'" class="material-icons">directions_walk</i>
-                    <span *ngIf="step.travel_mode === 'TRANSIT' && step.transit_details.line.vehicle.local_icon == null"> <img [src]="step.transit_details.line.vehicle.local_icon"> </span>
-                    <span *ngIf="step.travel_mode === 'TRANSIT' && step.transit_details.line.vehicle.local_icon != null"> <img [src]="step.transit_details.line.vehicle.icon"> </span>
-                    <span *ngIf="step.travel_mode === 'TRANSIT'" style="color: #ffffff ;background-color: {{step.transit_details.line.text_color}}"> {{ step.transit_details.line.short_name}} </span>
+                    <span *ngIf="step.travel_mode === 'TRANSIT' && step.transit_details.line.vehicle.local_icon == null"> <img [src]="step.transit_details.line.vehicle.icon" style="display: inline-block"> </span>
+                    <span *ngIf="step.travel_mode === 'TRANSIT' && step.transit_details.line.vehicle.local_icon != null"> <img [src]="step.transit_details.line.vehicle.local_icon" style="display: inline-block"> </span>
+                    <span *ngIf="step.travel_mode === 'TRANSIT'" [ngStyle]="{'backgroundColor':step.transit_details.line.color,'color' : step.transit_details.line.text_color}" style="color: #ffffff"> {{ step.transit_details.line.short_name}} </span>
                     <span> {{step.duration.text}} </span>
                     <span> > </span>
-                  </p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <div class="m-t-20 row">
+          <div class="col-md-9"></div>
+          <div class="col-md-2">
+          <a (click)="Participate(event.id,null)" class="btn btn-success pull-right"> Participer</a>
+          </div>
         </div>
-        <a (click)="Participate(event.id,RadioModel)" class="btn btn-success pull-right"> Participer</a>
       </div>
+    </div>
+    <div *ngIf="event.NbrParticipant == 2" class="sl-item " style="height: auto; overflow: auto">
+      <div class="m-l-40">
+        <a class="text-info">{{ event.user_create.nom}} {{ event.user_create.prenom }}</a> <span class="sl-date">{{ event.date}}</span>
+        <p><strong>Description :</strong> {{ event.Description}}</p>
+        <p><strong>Nombre de Paticipant :</strong> {{event.users_participate.length}}/{{ event.NbrParticipant - 1}}</p>
+        <p><strong>Date : </strong> {{ event.date}}</p>
+        <p>Pour Cette evenement veuillez propposer un lieu pour le rencontre. </p>
+        <div class="m-t-20 row">
+          <div class="col-md-9 col-xs-12">
+            <input type="text" #AdrCherchebas class="form-control form-control-line" placeholder="Saisie Address">
+          </div>
+          <div class="col-md-2 col-xs-12">
+            <a (click)="getPlacesBeetwen(event.Adr_Proposer ,AdrCherchebas.value,event.centreInt.Name)"  class="btn btn-info">Rechercher Place </a>
+          </div>
+        </div>
+        <div class="m-t-30 row" *ngFor="let place of placesBeetwen">
+            <div class="col-md-4 col-xs-12">
+              <img *ngIf="place.photos != null" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={{place.photos[0]?.photo_reference}}&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es" alt="user" class="img-responsive" style="height: 150px;width: 150px"  />
+              <img *ngIf="place.photos == null" src="../../assets/image-not-found-1.png" alt="user" class="img-responsive" style="height: 150px;width: 150px"  /></div>
+            <div class="col-md-8 col-xs-12">
+              <input type="Radio" [(ngModel)]="RadioModel" name="RadioModel" [value]="place?.place_id">
+              <a  class="text-info">  {{place?.name}}  </a> <span class="sl-item">{{place?.rating}}/5</span>
+              <p><strong>Address :</strong> {{place?.vicinity}} </p>
+              <a class="btn btn-info pull-2" (click)="directions(place.vicinity,AdrCherchebas.value)"> Itineraire</a><br>
+              <div *ngIf="Directions?.adr == place.vicinity" class="m-t-20 row" >
+                <div *ngFor="let route of Directions?.routes">
+                  <div *ngFor="let leg of route.legs">
+                    <div>
+                      <div>
+                        <div><strong>Duration : </strong><p> {{leg.duration.text}}</p></div>
+                        <div><strong>Distance : </strong><p> {{leg.distance.text}}</p></div>
+                      </div>
+                      <div>
+                        <strong> Trajet :  </strong>
+                        <div style="display: inline-block">
+                          <div *ngFor="let step of leg.steps" style="display: inline-block">
+                            <i *ngIf="step.travel_mode === 'WALKING'" class="material-icons">directions_walk</i>
+                            <span *ngIf="step.travel_mode === 'TRANSIT' && step.transit_details.line.vehicle.local_icon == null"> <img [src]="step.transit_details.line.vehicle.icon" style="display: inline-block"> </span>
+                            <span *ngIf="step.travel_mode === 'TRANSIT' && step.transit_details.line.vehicle.local_icon != null"> <img [src]="step.transit_details.line.vehicle.local_icon" style="display: inline-block"> </span>
+                            <span *ngIf="step.travel_mode === 'TRANSIT'" [ngStyle]="{'backgroundColor':step.transit_details.line.color,'color' : step.transit_details.line.text_color}" style="color: #ffffff"> {{ step.transit_details.line.short_name}} </span>
+                            <span> {{step.duration.text}} </span>
+                            <span> > </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="m-t-20 row">
+          <div class="col-md-9"></div>
+          <div class="col-md-2">
+            <a (click)="Participate(event.id,RadioModel)" class="btn btn-success pull-right"> Participer</a>
+          </div>
+        </div>
+    </div>
   </div>
-  <hr>
-  </div>
+    <hr>
+    <br><br>
+</div>
 </div>

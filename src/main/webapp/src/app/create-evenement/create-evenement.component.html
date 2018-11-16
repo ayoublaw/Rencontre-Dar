@@ -34,7 +34,7 @@
   </div>
   <div *ngFor="let place of ListPlace" class="steamline">
     <div class="sl-item">
-      <input type="radio" [(ngModel)]="RadioModel" name="RadioMedel" [value]="place.vicinity">
+      <input type="radio" [(ngModel)]="RadioModel" name="RadioMedel" [value]="place.place_id">
       <div class="sl-left">
         <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={{place.photos[0].photo_reference}}&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es" alt="user" class="img-rounded" /> </div>
       <div class="sl-right">
@@ -46,7 +46,7 @@
         <a (click)="directions(place.vicinity,adr_prop.value)" class="btn btn-default pull-right"> Iteniraires</a>
       </div>
     </div>
-    <div class="sl-right" *ngIf="Directions != null && Directions.adr == place.vicinity"  >
+    <div class="sl-right" *ngIf=" Directions != null && Directions.adr == place.vicinity"  >
     <div *ngFor="let route of Directions.routes" class="sl-item">
         <div *ngFor="let leg of route.legs">
           <div *ngIf="leg">
@@ -69,7 +69,7 @@
     </div>
     </div>
   </div>
-  <div *ngIf="evenService.MessageErr != null" class="alert alert-danger">{{ evenService.MessageErr }}</div>
+  <div *ngIf="evenService.MessageErr != null && evenService.MessageErr !== undefined" class="alert alert-danger">{{ evenService.MessageErr }}</div>
   <div class="form-group">
     <div class="col-sm-12">
       <button class="btn btn-success" (click)="Addaevent(descri.value,nbrpart.value,date.value,myModelProperty,RadioModel,adr_prop.value)">Ajouter Evenement</button>

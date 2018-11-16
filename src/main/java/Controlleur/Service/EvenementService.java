@@ -9,16 +9,15 @@ import Model.Entity.Users;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class EvenementService {
     public Evenement AddEvenement(Users user,String adr_proposer, String description, String Lieu, String nbrParticipants, String date, String centreint) throws ParseException, DataException {
-        if(Integer.parseInt(nbrParticipants) != 1 && Lieu == null ){
+        if(Integer.parseInt(nbrParticipants) != 2 && Lieu == null ){
             throw new DataException("Lieu not saised");
         }
-        if(Integer.parseInt(nbrParticipants) == 1 && adr_proposer == null){
+        if(Integer.parseInt(nbrParticipants) == 2 && adr_proposer == null){
             throw new DataException("Vous avez pas proposé une addresse");
         }
         if(adr_proposer == null || description == null || date == null || centreint == null){
@@ -32,7 +31,7 @@ public class EvenementService {
         e.setDescription(description);
         e.setEtat(Evenement.Etat.Invitation);
         e.setLieu(Lieu);
-        e.setAdr_Proposé(adr_proposer);
+        e.setAdr_Proposer(adr_proposer);
         e.setNbrParticipant(Integer.parseInt(nbrParticipants));
         e.setUser_create(user);
         e.setDate(new SimpleDateFormat("yyyy-MM-DD'T'HH:mm").parse(date));
@@ -46,8 +45,9 @@ public class EvenementService {
         }
         List<Evenement>  listEvenements = DaoFactory.getEvenementDao().EvenementNowWithSomeCentreInteret(user);
         if(listEvenements == null || listEvenements.isEmpty()){
-            throw new DataException("we don't have any evenement to show it for you");
+            throw new DataException("On a pas de prpositions d'evenement");
         }
+        System.out.println("Email :" +listEvenements.get(0).getUser_create().getEmail());
         return listEvenements;
     }
     public Evenement_Participant ParticipateInEvenement(Users user,int EvenementId,String lieu) throws DataException {
@@ -58,8 +58,11 @@ public class EvenementService {
         if(evenement.getEtat() != Evenement.Etat.Invitation){
             throw new DataException("you can't Participate in this Evenement");
         }
-        if(evenement.getNbrParticipant() == 1 && lieu == null){
+        if(evenement.getNbrParticipant() == 2 && lieu == null){
             throw new DataException("you don't choose any Address");
+        }
+        if(evenement.getNbrParticipant() == evenement.getUsers_participate().size() +1){
+            throw new DataException("Y'a plus de place ");
         }
         Evenement_Participant evenement_participant = new Evenement_Participant();
         evenement_participant.setEvenement(evenement);
@@ -70,10 +73,10 @@ public class EvenementService {
         DaoFactory.getUsersDao().update(user);
 
         evenement.getUsers_participate().add(evenement_participant);
-        if(evenement.getNbrParticipant() == evenement.getUsers_participate().size()){
-            if(evenement.getNbrParticipant() == 1){
+        if(evenement.getNbrParticipant() == evenement.getUsers_participate().size()+1){
+            if(evenement.getNbrParticipant() == 2){
                 evenement.setEtat(Evenement.Etat.AttendAcceptation);
-                evenement.setAdr_Proposé(lieu);
+                evenement.setLieu(lieu);
             }
             else{
                 evenement.setEtat(Evenement.Etat.Complet);
@@ -159,7 +162,7 @@ public class EvenementService {
     public List<Evenement> GetAllReponsesProposition(Users user) throws DataException {
         List<Evenement> list  = user.getUser_participation().stream().map(r -> r.getEvenement())
                 .filter(r ->r.getEtat() == Evenement.Etat.Invitation)
-                .filter(r ->r.getNbrParticipant() == 1)
+                .filter(r ->r.getNbrParticipant() == 2)
                 .collect(Collectors.toList());
         if(list == null || list.isEmpty()){
             throw new DataException("You do't have any Notifications");
@@ -177,7 +180,7 @@ public class EvenementService {
         if(evenement.getUser_create().getId() != user.getId()){
             throw new DataException("You don't have any permission");
         }
-        if(evenement.getNbrParticipant() != 1){
+        if(evenement.getNbrParticipant() != 2){
             throw new DataException("You don't have any permission");
         }
         if(b == true){

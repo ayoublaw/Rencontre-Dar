@@ -25,12 +25,7 @@ export class LoginService {
     return this.http.post(this.urlLogin, { email, password } , httpOptions)
       .pipe(
         catchError(this.handleError('login', []))
-      ).subscribe(data => {
-          this.router.navigate(['/dashboard']);
-        },
-        error => {
-          console.log('Error', error);
-        });
+      );
     }
   register(email: String, password: String, nom: String, prenom: String, age: String, sex: String, centreInt: String[]) {
     return this.http.post(this.urlRegister, { email: email, password: password, nom: nom, prenom: prenom, age: age, sex: sex, centreInt: centreInt} , httpOptions)
@@ -47,9 +42,9 @@ export class LoginService {
        // log to console instead
       // TODO: better job of transforming error for user consumption
       this.log(`${erreur.message}`);
-
       console.log(`${erreur.message}`);
       // Let the app keep running by returning an empty result.
+      this.router.navigate([`/${operation}`]);
       return of(result as T);
     };
   }

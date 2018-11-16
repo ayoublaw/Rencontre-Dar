@@ -25,7 +25,7 @@ public class AddEventServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         JSONObject jsonobj =JsonService.getJsonObjectFromBufferReader(request.getReader());
         String decription = jsonobj.getString("description");
-        String lieu = jsonobj.getString("lieu");
+        String lieu = jsonobj.get("lieu") instanceof String ? (String) jsonobj.get("lieu") : null ;
         String nbrParticipants = jsonobj.getString("nbrParticipants");
         String date = jsonobj.getString("date");
         String CentreInt = jsonobj.getString("CentreInt");

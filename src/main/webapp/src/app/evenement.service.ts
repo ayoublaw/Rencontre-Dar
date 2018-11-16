@@ -50,7 +50,7 @@ export class EvenementService {
       )
   }
   getPlaceBeetwenAdr(adr1: String,adr2: String,type: String){
-    return this.http.post('//getPlaceBeetwen',{adr1:adr1,adr2:adr2,type:type})
+    return this.http.post('getPlaceBeetwen',{ adr1: adr1 , adr2 : adr2, type : type })
       .pipe(
         tap(data => console.log(data)),
         catchError(this.handleError('getPlace'))
@@ -67,15 +67,19 @@ export class EvenementService {
     return (erreur: any): Observable<T> => {
       // log to console instead
       // TODO: better job of transforming error for user consumption
-      this.log(`${erreur.message}`);
+      this.log(`${erreur.error.ERR}`);
 
-      console.log(`${erreur}`);
+      console.log(erreur);
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }
   private log(message: String) {
     this.MessageErr = message;
+  }
+  clean(){
+    console.log("clique");
+    this.MessageErr = null;
   }
 
 }

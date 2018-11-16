@@ -21,12 +21,16 @@ export class CreateEvenementComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.evenService.clean();
   }
   Addaevent(description: String,nbrParticipants: String,date: String,CentreInt: String,lieu: String,adr_proposer: String){
+    if(lieu == undefined){
+      lieu = null;
+    }
     this.evenService.Addevent(description,nbrParticipants,date,CentreInt,lieu,adr_proposer)
       .subscribe(data => {
         this.AcceptMessage = data.message,
-          this.router.navigate(['/dashboard'])
+          this.router.navigate(['/'])
       })
   }
   getPlace(adr: String,type: String){
