@@ -12,6 +12,7 @@ import { ErrMessageComponent } from './err-message/err-message.component';
 import { CreateEvenementComponent } from './create-evenement/create-evenement.component';
 import { CreateAddressComponent } from './create-address/create-address.component';
 import { EvenementComponent } from './evenement/evenement.component';
+import { InvitationComponent } from './invitation/invitation.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { EvenementComponent } from './evenement/evenement.component';
     ErrMessageComponent,
     CreateEvenementComponent,
     CreateAddressComponent,
-    EvenementComponent
+    EvenementComponent,
+    InvitationComponent
   ],
   imports: [
     BrowserModule,

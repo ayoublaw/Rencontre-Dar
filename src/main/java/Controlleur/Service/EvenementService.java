@@ -151,11 +151,21 @@ public class EvenementService {
             user.getUser_participation().remove(evenement_participants);
             DaoFactory.getUsersDao().update(user);
         }
+        else {
+            Evenement e = (Model.Entity.Evenement) user.getUser_participation().stream().map(r -> r.getEvenement())
+                    .filter(u->u.getId() == ev.getId());
+            if(e != null){
+                Evenement_Participant par = (Evenement_Participant) user.getUser_participation()
+                        .stream().filter(r -> r.getEvenement().getId() == ev.getId());
+                user.getUser_participation().remove(par);
+                DaoFactory.getUsersDao().update(user);
+            }
+        }
     }
     public List<Evenement> GetAllProposition(Users user) throws DataException {
         List<Evenement> list = DaoFactory.getEvenementDao().GetEvenementEtatAttendAcceptation(user);
         if(list == null || list.isEmpty()){
-            throw new DataException("you don't have any Propositions");
+            throw new DataException("Vous avez pas de propositions");
         }
         return list;
     }
@@ -165,14 +175,11 @@ public class EvenementService {
                 .filter(r ->r.getNbrParticipant() == 2)
                 .collect(Collectors.toList());
         if(list == null || list.isEmpty()){
-            throw new DataException("You do't have any Notifications");
+            throw new DataException("Vous avez pas de notifications");
         }
         return list;
     }
-    public void AcceptOrRefuseProposition(Users user,int Evenement,Boolean b,String lieu) throws DataException {
-        if(b == true && lieu == null){
-            throw new DataException("");
-        }
+    public void AcceptOrRefuseProposition(Users user,int Evenement,Boolean b) throws DataException {
         Evenement evenement = DaoFactory.getEvenementDao().getById(Evenement);
         if(evenement == null){
             throw new DataException("Evenement don't exist");
@@ -185,12 +192,12 @@ public class EvenementService {
         }
         if(b == true){
             evenement.setEtat(Model.Entity.Evenement.Etat.Complet);
-            evenement.setLieu(lieu);
         }
         else{
             DaoFactory.getEvenementParticipantDao().remove(evenement.getUsers_participate().get(0));
             evenement.getUsers_participate().remove(evenement.getUsers_participate().get(0));
             evenement.setEtat(Model.Entity.Evenement.Etat.Invitation);
+            evenement.setLieu(null);
         }
         DaoFactory.getEvenementDao().update(evenement);
     }

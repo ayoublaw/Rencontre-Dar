@@ -28,10 +28,10 @@
             <input type="text" #AdrCherchehaut class="form-control form-control-line" placeholder="Saisie Address">
           </div>
           <div class="col-md-2 col-xs-12" >
-            <a (click)="directions(event.Lieu,AdrCherchehaut.value)"  class="btn btn-info">Iteniraire </a>
+            <a (click)="directions(event.Adr_Proposer,AdrCherchehaut.value)"  class="btn btn-info">Iteniraire </a>
           </div>
         </div>
-        <div *ngIf="Directions?.adr == event.Lieu" >
+        <div *ngIf="Directions?.adr == event.Adr_Proposer" >
           <div class="col-md-2"></div>
           <div class="col-md-9" *ngFor="let route of Directions?.routes">
             <div *ngFor="let leg of route.legs">

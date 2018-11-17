@@ -63,6 +63,42 @@ export class EvenementService {
         catchError(this.handleError('paricipate'))
       )
   }
+  Propositions() : Observable<any>{
+    return this.http.get('NotificatonsPropositions')
+      .pipe(
+        tap(data => console.log(data)),
+        catchError(this.handleError('Propositions'))
+      )
+  }
+  ReponsesforOurPropositions(){
+    return this.http.get('NotificationsResponse')
+      .pipe(
+        tap(data => console.log(data)),
+        catchError(this.handleError('Responses'))
+      )
+  }
+  PlaceDetails(id: String) : Observable<any>{
+    return this.http.post('/getPlaceDetails',{id: id})
+      .pipe(
+        tap(data => console.log(data)),
+        catchError(this.handleError('placeDeatails'))
+      )
+  }
+  AccepteOrRefuse(evenementID: number, b: Boolean): Observable<any>{
+    return this.http.post('/acceptOrrefuse',{evenementID : evenementID , b : b})
+      .pipe(
+        tap(data => console.log(data)),
+        catchError(this.handleError('accepteOrRefuse'))
+      )
+  }
+  DeleteParticipation(evenementId : number): Observable<any>{
+    return this.http.post('DeleteParticipation',{evenementId:evenementId})
+      .pipe(
+        tap(data => console.log(data)),
+        catchError(this.handleError('accepteOrRefuse'))
+
+  )
+  }
   private handleError<T> (operation = 'operation', result?: T) {
     return (erreur: any): Observable<T> => {
       // log to console instead
@@ -78,7 +114,6 @@ export class EvenementService {
     this.MessageErr = message;
   }
   clean(){
-    console.log("clique");
     this.MessageErr = null;
   }
 

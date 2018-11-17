@@ -31,6 +31,9 @@ public class EvenementDao extends Dao<Evenement> {
                 .map(x ->x.getEvenement()).collect(Collectors.toList());
     }
     public List<Evenement> GetEvenementEtatAttendAcceptation(Users user){
-        return user.getEvenement_create().stream().filter(r -> r.getEtat().equals(Evenement.Etat.AttendAcceptation)).collect(Collectors.toList());
+        return user.getEvenement_create().stream()
+                .filter(r ->r.getUser_create().getEmail().equals(user.getEmail()))
+                .filter(r -> r.getEtat().equals(Evenement.Etat.AttendAcceptation))
+                .collect(Collectors.toList());
     }
 }

@@ -33,7 +33,6 @@ export class EvenementComponent implements OnInit {
       .subscribe(data => this.placesBeetwen = data);;
   }
   Participate(Id:String,lieu:String){
-
     this.eventService.Participe(Id,lieu)
       .subscribe(data => {
       this.getEventCanParticipate();

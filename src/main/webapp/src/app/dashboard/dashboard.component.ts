@@ -23,7 +23,6 @@ export class DashboardComponent implements OnInit {
         if(data.session == null){
           this.router.navigate(['login']);
         }
-          console.log("test" + this.Session)})
+      })
   }
-
 }

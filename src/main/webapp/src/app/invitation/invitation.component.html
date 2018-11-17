@@ -1,0 +1,68 @@
+<div class="steamline">
+  <div *ngIf="MessageAcc != null" class="alert alert-success">{{MessageAcc}}</div>
+  <div *ngIf="eventService.MessageErr != null " class="alert alert-danger">{{ eventService.MessageErr }}</div>
+  <div *ngFor="let event of Propositions" class="sl-item">
+      <div class="m-l-40">
+        <p >Propositions de L'utilisateur {{event?.users_participate[0].nom}} {{event?.users_participate[0].Prenom}} Pour l'Evenement</p>
+        <p><strong>Description :</strong> {{event?.Description}}</p>
+        <p><strong>Date :</strong>{{event?.date}} </p>
+        <p><strong>Centre Interet:</strong>{{event?.centreInt.Name}}</p>
+        <div *ngFor="let place of PlaceDeatils" class="m-t-20 row">
+          <div *ngIf="event?.Lieu == place?.result.place_id">
+            <div class="col-md-4 col-xs-12">
+              <img *ngIf="place.result.photos != null" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={{place.result.photos[0]?.photo_reference}}&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es" alt="user" class="img-responsive" style="height: 150px;width: 150px"  />
+              <img *ngIf="place.result.photos == null" src="../../assets/image-not-found-1.png" alt="user" class="img-responsive" style="height: 150px;width: 150px"  /></div>
+            <div class="col-md-8 col-xs-12">
+              <p>  {{place?.result.name}}  </p>
+              <p><strong>Rating :</strong>{{place?.result.rating}}/5</p>
+              <p><strong>Address :</strong> {{place?.result.vicinity}} </p>
+              <a class="btn btn-info pull-2" (click)="directions(place?.result.vicinity,event.Adr_Proposer)"> Itineraire</a><br>
+              <div *ngIf="Directions?.adr == place?.result.vicinity" >
+                <div *ngFor="let route of Directions?.routes">
+                  <div *ngFor="let leg of route.legs">
+                    <div>
+                      <div>
+                        <div><strong>Duration : </strong><p> {{leg.duration.text}}</p></div>
+                        <div><strong>Distance : </strong><p> {{leg.distance.text}}</p></div>
+                      </div>
+                      <div>
+                        <strong> Trajet :  </strong>
+                        <div style="display: inline-block">
+                          <div *ngFor="let step of leg.steps" style="display: inline-block">
+                            <i *ngIf="step.travel_mode === 'WALKING'" class="material-icons">directions_walk</i>
+                            <span *ngIf="step.travel_mode === 'TRANSIT' && step.transit_details.line.vehicle.local_icon == null"> <img [src]="step.transit_details.line.vehicle.icon" style="display: inline-block"> </span>
+                            <span *ngIf="step.travel_mode === 'TRANSIT' && step.transit_details.line.vehicle.local_icon != null"> <img [src]="step.transit_details.line.vehicle.local_icon" style="display: inline-block"> </span>
+                            <span *ngIf="step.travel_mode === 'TRANSIT'" [ngStyle]="{'backgroundColor':step.transit_details.line.color,'color' : step.transit_details.line.text_color}" style="color: #ffffff"> {{ step.transit_details.line.short_name}} </span>
+                            <span> {{step.duration.text}} </span>
+                            <span> > </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="m-t-20 row">
+          <div class="col-md-8 col-xs-12"></div>
+          <div class="col-md-2 col-xs-12">
+            <a (click)="AccepteOrRefuse(event?.id,true)" class="btn btn-success pull-right"> Accepeter</a>
+          </div>
+          <div class="col-md-2 col-xs-12">
+            <a (click)="AccepteOrRefuse(event?.id,false)" class="btn btn-danger pull-right"> Refuser</a>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div *ngFor="let event of Responses" class="sl-item">
+    <div class="m-l-40">
+      <p>La proposition que vous avez Proposer pour l'evenement :</p>
+      <p><strong>Description :</strong> {{event?.Description}}</p>
+      <p><strong>Date :</strong>{{event?.date}} </p>
+      <p class="alert alert-danger"> L'utilisateur {{ event.user_create.nom}} {{ event.user_create.prenom }} a réfusé<i (click)="DeleteParticipation(event.id)" class="icon-arrows-keyboard-deletes"></i> </p>
+    </div>
+  </div>
+  <hr>
+</div>
