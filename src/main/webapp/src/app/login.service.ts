@@ -37,6 +37,34 @@ export class LoginService {
           console.log('Error', error);
         });
   }
+  GetAllUsers(): Observable<any>{
+    return this.http.get('/AllUsers')
+      .pipe(
+        tap(data => console.log(data)),
+        catchError(this.handleError('Delete Evenement'))
+      )
+  }
+  SignalCompte(nom: String,prenom: String,Description: String): Observable<any>{
+    return this.http.post('SignalCompte',{nom:nom,prenom:prenom,description: Description})
+      .pipe(
+        tap(data => console.log(data)),
+        catchError(this.handleError('Delete Evenement'))
+      )
+  }
+  ListSignalCompte():Observable<any>{
+    return this.http.get('ListSignalCompte')
+      .pipe(
+        tap(data =>console.log(data)),
+        catchError(this.handleError('ListSignalCompte'))
+      )
+  }
+  ConfirmSignalCompte(Email : String) : Observable<any>{
+    return this.http.post('ConfirmSignalCompte',{Email : Email})
+      .pipe(
+        tap(data =>console.log(data)),
+        catchError(this.handleError('ConfirmSignalCompte'))
+      )
+  }
   private handleError<T> (operation = 'operation', result?: T) {
     return (erreur: any): Observable<T> => {
        // log to console instead

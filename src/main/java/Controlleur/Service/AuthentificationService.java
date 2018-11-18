@@ -102,4 +102,7 @@ public class AuthentificationService {
         }
         return user;
     }
+    public List<Users> AllUsers(){
+        return  DaoFactory.getUsersDao().selectAll();
+    }
 }

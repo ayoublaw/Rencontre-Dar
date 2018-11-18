@@ -24,8 +24,8 @@ public class SignalCompteService {
      }
      return list;
     }
-    public void ConfirmSignalCompte(String nom,String prenom){
-        Users user = DaoFactory.getUsersDao().GetUserByName(nom,prenom);
+    public void ConfirmSignalCompte(String Email){
+        Users user = DaoFactory.getUsersDao().GetUserByEmail(Email);
         List<SignalCompte> userSignal = DaoFactory.getSignalCompte().getSignalCompteForoneUser(user);
         user.setEtat(Users.Etat.Suspendu);
         DaoFactory.getUsersDao().update(user);

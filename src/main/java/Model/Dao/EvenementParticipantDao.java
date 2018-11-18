@@ -9,16 +9,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EvenementParticipantDao extends Dao<Evenement_Participant> {
     public List<Evenement_Participant> getEvenementParticipantFromEvenement(Evenement ev){
-        SessionFactory factory = HibernateUtil.getSessionFactory();
-        Session s = factory.openSession();
-        Query q = s.createQuery("select t from " + Evenement_Participant.class.getSimpleName()+" t where evenemrnt = :x");
-        q.setParameter("x",ev.getId());
-        List<Evenement_Participant> list = q.list();
-        s.close();
-        return list;
+        return this.selectAll().stream().filter(r ->r.getEvenement().getId() == ev.getId()).collect(Collectors.toList());
     }
     public Evenement_Participant getEvenementParticipantFromEvenementAndUser(Evenement ev,Users user){
         SessionFactory factory = HibernateUtil.getSessionFactory();

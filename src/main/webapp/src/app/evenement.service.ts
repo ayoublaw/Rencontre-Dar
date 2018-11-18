@@ -21,7 +21,7 @@ export class EvenementService {
 
   constructor(
     private http: HttpClient
-  ) { }
+  ) {}
   Addevent(description: String,nbrParticipants: String,date: String,CentreInt: String,lieu: String,adr_proposer: String): Observable<any>{
     return this.http.post(this.urlAdd,{description: description, nbrParticipants: nbrParticipants, date: date, CentreInt:CentreInt,lieu: lieu, adr_proposer: adr_proposer},httpOptions)
       .pipe(
@@ -85,7 +85,7 @@ export class EvenementService {
       )
   }
   AccepteOrRefuse(evenementID: number, b: Boolean): Observable<any>{
-    return this.http.post('/acceptOrrefuse',{evenementID : evenementID , b : b})
+    return this.http.post('/acceptOrrefuse',{evenementID : evenementID , decision : b})
       .pipe(
         tap(data => console.log(data)),
         catchError(this.handleError('accepteOrRefuse'))
@@ -99,6 +99,28 @@ export class EvenementService {
 
   )
   }
+  GetMyEventActif(): Observable<any>{
+    return this.http.get('/Listcreate')
+      .pipe(
+        tap(data =>console.log(data)),
+        catchError(this.handleError('GetMyEventActif'))
+      )
+  }
+  GetMyParticiActif(): Observable<any>{
+    return this.http.get('ListParticipation')
+      .pipe(
+        tap(data => console.log(data)),
+        catchError(this.handleError('GetMyParticipActif'))
+      )
+  }
+  DeleteEvenement(evenementId: number): Observable<any>{
+    return this.http.post('DeleteEvenement',{evenementId : evenementId})
+      .pipe(
+        tap(data => console.log(data)),
+        catchError(this.handleError('Delete Evenement'))
+      )
+  }
+
   private handleError<T> (operation = 'operation', result?: T) {
     return (erreur: any): Observable<T> => {
       // log to console instead

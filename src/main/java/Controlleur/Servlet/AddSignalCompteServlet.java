@@ -8,6 +8,7 @@ import Model.Dao.DaoFactory;
 import Model.Entity.SignalCompte;
 import Model.Entity.Users;
 import org.hibernate.Session;
+import org.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,18 +18,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "AddSignalCompteServlet")
+@WebServlet(name = "AddSignalCompteServlet",urlPatterns = "/SignalCompte")
 public class AddSignalCompteServlet extends HttpServlet {
     AuthentificationService auth = new AuthentificationService();
     SignalCompteService sign = new SignalCompteService();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String nom = request.getParameter("nom");
-        String prenom = request.getParameter("prenom");
-        String description = request.getParameter("description");
+        JSONObject jsonobj = JsonService.getJsonObjectFromBufferReader(request.getReader());
+        String nom = jsonobj.getString("nom");
+        String prenom = jsonobj.getString("prenom");
+        String description = jsonobj.getString("description");
         try {
             Users currentUser = auth.CurrentUser(request);
             sign.AddSignalCompte(nom,prenom,currentUser,description);
-            JsonService.StringJsonResponse(response,"text","message bien envoyer");
+            JsonService.StringJsonResponse(response,"message","message bien envoyer");
         } catch (DataException e) {
             JsonService.ErrJsonResponse(response,e);
 

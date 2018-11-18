@@ -13,6 +13,9 @@ import { CreateEvenementComponent } from './create-evenement/create-evenement.co
 import { CreateAddressComponent } from './create-address/create-address.component';
 import { EvenementComponent } from './evenement/evenement.component';
 import { InvitationComponent } from './invitation/invitation.component';
+import { ProfilComponent } from './profil/profil.component';
+import { UsersComponent } from './users/users.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { InvitationComponent } from './invitation/invitation.component';
     CreateEvenementComponent,
     CreateAddressComponent,
     EvenementComponent,
-    InvitationComponent
+    InvitationComponent,
+    ProfilComponent,
+    UsersComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
