@@ -7,21 +7,24 @@ import {LoginService} from "../login.service";
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-  ListSignalCompte : any[];
+  listSignalCompte : any[];
   MessageConf : String;
   constructor(
     public LoginService : LoginService
   ) { }
 
   ngOnInit() {
+    this.ListSignalCompte();
   }
   ListSignalCompte(){
     this.LoginService.ListSignalCompte()
-      .subscribe(data => this.ListSignalCompte =data)
+      .subscribe(data => this.listSignalCompte =data)
   }
   ConfirmSignalCompte(Email:String){
     this.LoginService.ConfirmSignalCompte(Email)
-      .subscribe(data =>this.MessageConf = data.message)
+      .subscribe(data =>
+      {this.ListSignalCompte();
+        this.MessageConf = data.message})
 
   }
 }
