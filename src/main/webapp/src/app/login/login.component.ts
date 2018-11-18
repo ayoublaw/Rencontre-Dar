@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
     this.loginService.login(email, password )
       .subscribe(
         data => {
+          console.log('Erreur :' +this.MessageErr.message);
           if(this.MessageErr.message == 'Email or Username Invalid' || this.MessageErr.message === undefined){
             this.router.navigate(['/login'])
           }
