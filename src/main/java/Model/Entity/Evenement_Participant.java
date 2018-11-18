@@ -1,5 +1,7 @@
 package Model.Entity;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -15,6 +17,7 @@ public class Evenement_Participant implements Serializable {
     private Integer id;
 
     @ManyToOne
+    @Expose
     private Users user_participate;
 
     @ManyToOne

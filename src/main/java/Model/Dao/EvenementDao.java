@@ -14,7 +14,13 @@ public class EvenementDao extends Dao<Evenement> {
     }
     public List<Evenement> EvenementNowWithSomeCentreInteret(Users user){
         List<String> list = user.getCentreInteret().stream().map(r -> r.getName()).collect(Collectors.toList());
-        return this.selectAll().stream().filter(r->r.getEtat().equals(Evenement.Etat.Invitation)).filter(r -> list.contains(r.getCentreInt().getName())).collect(Collectors.toList());
+
+        return this.selectAll().stream()
+                .filter(r->r.getEtat().equals(Evenement.Etat.Invitation))
+                .filter(r -> !r.getUsers_participate().stream().map(u -> u.getUser_participate().getEmail()).collect(Collectors.toList()).contains(user.getEmail()))
+                .filter(r -> list.contains(r.getCentreInt().getName()))
+                .filter(r -> !r.getUser_create().getEmail().equals(user.getEmail()))
+                .collect(Collectors.toList());
     }
     public List<Evenement> GetEvenementActifCreateByUser(Users user){
         return user.getEvenement_create().stream().filter(r -> !r.getEtat().equals(Evenement.Etat.Expirer))
@@ -25,6 +31,9 @@ public class EvenementDao extends Dao<Evenement> {
                 .map(x ->x.getEvenement()).collect(Collectors.toList());
     }
     public List<Evenement> GetEvenementEtatAttendAcceptation(Users user){
-        return user.getEvenement_create().stream().filter(r -> r.getEtat().equals(Evenement.Etat.AttendAcceptation)).collect(Collectors.toList());
+        return user.getEvenement_create().stream()
+                .filter(r ->r.getUser_create().getEmail().equals(user.getEmail()))
+                .filter(r -> r.getEtat().equals(Evenement.Etat.AttendAcceptation))
+                .collect(Collectors.toList());
     }
 }

@@ -24,13 +24,16 @@
             ],
             "styles": [
               "src/css/style.css",
-              "src/css/bootstrap.min.css"
+              "src/css/bootstrap.min.css",
+              "src/css/footable.core.css"
             ],
             "scripts": [
               "src/JS/jquery.min.js",
               "src/JS/bootstrap.min.js",
               "src/JS/sidebar-nav.min.js",
-              "src/JS/tether.min.js"
+              "src/JS/tether.min.js",
+              "src/JS/footable.all.min.js",
+              "src/JS/footable-init.js"
             ]
           },
           "configurations": {

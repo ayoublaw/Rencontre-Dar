@@ -1,9 +1,11 @@
 package Controlleur.Servlet;
 
+import Controlleur.Service.JsonService;
 import Controlleur.Service.SignalCompteService;
 import Model.Entity.Users;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import org.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,12 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "ConfirmSignalCompteServlet")
+@WebServlet(name = "ConfirmSignalCompteServlet",urlPatterns = "/ConfirmSignalCompte")
 public class ConfirmSignalCompteServlet extends HttpServlet {
     SignalCompteService sign = new SignalCompteService();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String nom = request.getParameter("nom");
-        String prenom = request.getParameter("prenom");
+        JSONObject jsonobj = JsonService.getJsonObjectFromBufferReader(request.getReader());
+        String Email = jsonobj.getString("Email");
         HttpSession session = request.getSession(true);
         if(session.isNew() || !session.getAttribute("Role").equals("Admin")){
             String json = new Gson().toJson("ERR : you don't have permition");
@@ -28,19 +30,9 @@ public class ConfirmSignalCompteServlet extends HttpServlet {
             response.getWriter().write(json);
         }
 
-        sign.ConfirmSignalCompte(nom,prenom);
+        sign.ConfirmSignalCompte(Email);
 
-        Gson gson= new Gson();
-        JsonElement jsonElement=gson.toJsonTree(nom);
-        jsonElement.getAsJsonObject().addProperty("prenom",prenom);
-        jsonElement.getAsJsonObject().addProperty("resultas","Confirmé");
-        String json = gson.toJson(jsonElement);
-
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.setStatus(200);
-        response.getWriter().write(json);
-
+        JsonService.StringJsonResponse(response,"message","L'utilisateur "+Email+" est bloqué");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

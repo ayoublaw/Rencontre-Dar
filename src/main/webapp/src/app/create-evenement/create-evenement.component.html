@@ -1,3 +1,77 @@
-<p>
-  create-evenement works!
-</p>
+<div class="form-horizontal form-material">
+  <div class="form-group">
+    <label class="col-md-12">Description</label>
+    <div class="col-md-12">
+      <input type="text" #descri class="form-control form-control-line">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="example-email" class="col-md-12">Nombre de participant</label>
+    <div class="col-md-12">
+      <input type="number"  class="form-control form-control-line" name="nbrpati" id="example-email" #nbrpart (input)="nbrpart.value">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-md-12">date</label>
+    <div class="col-md-12">
+      <input type="datetime-local" #date class="form-control form-control-line">
+    </div>
+  </div>
+  <div class="form-group ">
+    <div class="col-xs-12">
+      <label> Centre d'interet : </label>
+      <select [(ngModel)]="myModelProperty" class="form-check">
+        <option *ngFor="let centre of centreIntTab" [ngValue]="centre">{{centre}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-md-12">Saisie votre Adresse pour l'evenement</label>
+    <div class="col-md-12">
+      <input type="text" #adr_prop class="form-control form-control-line"  >
+      <a *ngIf="nbrpart.value > 2" (click)="getPlace(adr_prop.value,myModelProperty)"  class="btn btn-success">Chercher des places</a>
+    </div>
+  </div>
+  <div class="m-t-30 row" *ngFor="let place of ListPlace">
+    <div class="col-md-2 col-xs-12">
+      <img *ngIf="place.photos != null" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={{place.photos[0]?.photo_reference}}&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es" alt="user" class="img-responsive" style="height: 150px;width: 150px"  />
+      <img *ngIf="place.photos == null" src="../../assets/image-not-found-1.png" alt="user" class="img-responsive" style="height: 150px;width: 150px"  /></div>
+    <div class="col-md-8 col-xs-12">
+      <input type="Radio" [(ngModel)]="RadioModel" name="RadioMedel" [value]="place?.place_id">
+      <a  class="text-info">  {{place?.name}}  </a> <span class="sl-item">{{place?.rating}}/5</span>
+      <p><strong>Address :</strong> {{place?.vicinity}} </p>
+      <a class="btn btn-info pull-2" (click)="directions(place.vicinity,adr_prop.value)"> Itineraire</a><br>
+      <div *ngIf="Directions?.adr == place.vicinity" class="m-t-20 row" >
+        <div *ngFor="let route of Directions?.routes">
+          <div *ngFor="let leg of route.legs">
+            <div>
+              <div>
+                <div><strong>Duration : </strong><p> {{leg.duration.text}}</p></div>
+                <div><strong>Distance : </strong><p> {{leg.distance.text}}</p></div>
+              </div>
+              <div>
+                <strong> Trajet :  </strong>
+                <div style="display: inline-block">
+                  <div *ngFor="let step of leg.steps" style="display: inline-block">
+                    <i *ngIf="step.travel_mode === 'WALKING'" class="material-icons">directions_walk</i>
+                    <span *ngIf="step.travel_mode === 'TRANSIT' && step.transit_details.line.vehicle.local_icon == null"> <img [src]="step.transit_details.line.vehicle.icon" style="display: inline-block"> </span>
+                    <span *ngIf="step.travel_mode === 'TRANSIT' && step.transit_details.line.vehicle.local_icon != null"> <img [src]="step.transit_details.line.vehicle.local_icon" style="display: inline-block"> </span>
+                    <span *ngIf="step.travel_mode === 'TRANSIT'" [ngStyle]="{'backgroundColor':step.transit_details.line.color,'color' : step.transit_details.line.text_color}" style="color: #ffffff"> {{ step.transit_details.line.short_name}} </span>
+                    <span> {{step.duration.text}} </span>
+                    <span> > </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="evenService.MessageErr != null && evenService.MessageErr !== undefined" class="alert alert-danger">{{ evenService.MessageErr }}</div>
+  <div class="form-group">
+    <div class="col-sm-12">
+      <button class="btn btn-success" (click)="Addaevent(descri.value,nbrpart.value,date.value,myModelProperty,RadioModel,adr_prop.value)">Ajouter Evenement</button>
+    </div>
+  </div>
+</div>

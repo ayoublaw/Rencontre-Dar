@@ -42,7 +42,6 @@ public class AuthentificationService {
         user.setEtat(Users.Etat.Actif);
         user.setRole(Users.Roles.Utilisateur);
         DaoFactory.getUsersDao().Save(user);
-        System.out.println(" TESttttttttt "+user.getPassword()+ "  " + user.getPrenom()  + " "+ user.getSex() +" " +user.getAge());
 
 
         List<CentreInt> listCentreInt = new ArrayList<CentreInt>();
@@ -102,5 +101,8 @@ public class AuthentificationService {
             throw new DataException("you are Suspendu");
         }
         return user;
+    }
+    public List<Users> AllUsers(){
+        return  DaoFactory.getUsersDao().selectAll();
     }
 }

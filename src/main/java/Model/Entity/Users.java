@@ -1,5 +1,6 @@
 package Model.Entity;
 
+import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -21,15 +22,19 @@ public class Users implements Serializable {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Expose
     private Integer id;
 
     @Column(name = "nom")
+    @Expose
     private String nom;
 
     @Column(name = "prenom")
+    @Expose
     private String prenom;
 
     @Column
+    @Expose
     private String sex;
 
 
@@ -37,14 +42,17 @@ public class Users implements Serializable {
     private String password;
 
     @Column
+    @Expose
     private long age;
 
     @Column
+    @Expose
     private String email;
 
 
     @Enumerated(EnumType.STRING)
     @Column
+    @Expose
     private Etat etat;
 
     @Enumerated(EnumType.STRING)
@@ -58,6 +66,7 @@ public class Users implements Serializable {
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "users")
+    @Expose
     private List<CentreInt> centreInteret;
 
     @LazyCollection(LazyCollectionOption.FALSE)

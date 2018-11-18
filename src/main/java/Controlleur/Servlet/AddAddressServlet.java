@@ -8,6 +8,7 @@ import Model.Entity.Users;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import org.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,22 +17,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "AddAddressServlet")
+@WebServlet(name = "AddAddressServlet",urlPatterns = "/addAdress")
 public class AddAddressServlet extends HttpServlet {
     AuthentificationService auth = new AuthentificationService();
     AddressService adr = new AddressService();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String[] nom = request.getParameterValues("nom");
-        String[] numero = request.getParameterValues("numero");
-        String[] rue = request.getParameterValues("rue");
-        String[] ville = request.getParameterValues("ville");
-        String[] codepostal = request.getParameterValues("codepostal");
+        JSONObject jsonobj =JsonService.getJsonObjectFromBufferReader(request.getReader());
+        String nom = jsonobj.getString("nom");
+        String numero = jsonobj.getString("numero");
+        String rue = jsonobj.getString("rue");
+        String ville = jsonobj.getString("ville");
+        String codepostal = jsonobj.getString("codepostal");
         try {
             Users user = auth.CurrentUser(request);
             adr.AddAddress(nom,numero,rue,ville,codepostal,user);
 
             JsonObject jsonO = new JsonObject();
-            jsonO.addProperty("Text","Address bien enregistré");
+            jsonO.addProperty("message","Address bien enregistré");
             String json = new Gson().toJson(jsonO);
 
             response.setContentType("application/json");

@@ -11,6 +11,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ErrMessageComponent } from './err-message/err-message.component';
 import { CreateEvenementComponent } from './create-evenement/create-evenement.component';
 import { CreateAddressComponent } from './create-address/create-address.component';
+import { EvenementComponent } from './evenement/evenement.component';
+import { InvitationComponent } from './invitation/invitation.component';
+import { ProfilComponent } from './profil/profil.component';
+import { UsersComponent } from './users/users.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +25,12 @@ import { CreateAddressComponent } from './create-address/create-address.componen
     DashboardComponent,
     ErrMessageComponent,
     CreateEvenementComponent,
-    CreateAddressComponent
+    CreateAddressComponent,
+    EvenementComponent,
+    InvitationComponent,
+    ProfilComponent,
+    UsersComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

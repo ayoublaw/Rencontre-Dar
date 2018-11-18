@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "Address")
+@Table(name = "Address",uniqueConstraints = @UniqueConstraint(columnNames = {"nom"}))
 public class Address implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -17,7 +17,7 @@ public class Address implements Serializable {
     @Expose
     private Integer Id;
 
-    @Column
+    @Column(name = "nom")
     @Expose
     private String Nom;
 

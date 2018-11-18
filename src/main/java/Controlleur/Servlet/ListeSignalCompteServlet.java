@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-@WebServlet(name = "ListeSignalCompteServlet")
+@WebServlet(name = "ListeSignalCompteServlet" ,urlPatterns = "/ListSignalCompte")
 public class ListeSignalCompteServlet extends HttpServlet {
     SignalCompteService sign = new SignalCompteService();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

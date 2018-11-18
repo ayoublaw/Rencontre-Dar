@@ -37,17 +37,17 @@ public class Evenement implements Serializable {
     @Expose
     private String Lieu;
 
-    public String getAdr_Proposé() {
-        return Adr_Proposé;
+    public String getAdr_Proposer() {
+        return Adr_Proposer;
     }
 
-    public void setAdr_Proposé(String adr_Proposé) {
-        Adr_Proposé = adr_Proposé;
+    public void setAdr_Proposer(String adr_Proposer) {
+        Adr_Proposer = adr_Proposer;
     }
 
     @Column
     @Expose
-    private String Adr_Proposé;
+    private String Adr_Proposer;
 
     @Column
     @Expose
@@ -65,15 +65,16 @@ public class Evenement implements Serializable {
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "evenement")
+    @Expose
     private List<Evenement_Participant> users_participate;
 
     @ElementCollection
     @Column
     @LazyCollection(LazyCollectionOption.FALSE)
-    @Expose
     private List<String> LieuProposé;
 
     @ManyToOne
+    @Expose
     private CentreInt centreInt;
 
     public List<String> getLieuProposé() {

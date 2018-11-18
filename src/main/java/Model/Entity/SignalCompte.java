@@ -1,5 +1,7 @@
 package Model.Entity;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -20,17 +22,20 @@ public class SignalCompte implements Serializable {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Expose
     private Integer id;
 
     @Column
+    @Expose
     private String Name;
 
 
     @ManyToOne
+    @Expose
     private Users user_create_signal;
 
-
     @ManyToOne
+    @Expose
     private Users user_signal;
 
     public String getName() {

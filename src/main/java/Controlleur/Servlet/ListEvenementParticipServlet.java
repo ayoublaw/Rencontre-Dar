@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "ListEvenementParticipServlet")
+@WebServlet(name = "ListEvenementParticipServlet",urlPatterns = "/ListParticipation")
 public class ListEvenementParticipServlet extends HttpServlet {
     AuthentificationService auth = new AuthentificationService();
     EvenementService even = new EvenementService();

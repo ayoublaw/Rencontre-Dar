@@ -9,20 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddressService {
-    public void AddAddress(String[] nom, String[] numero, String[] rue, String[] ville, String[] codepostal, Users user){
-        List<Address> listaddress = new ArrayList<Address>();
-        for (int i = 0; i < nom.length; i++) {
+    public void AddAddress(String nom, String numero, String rue, String ville, String codepostal, Users user){
             Address adr = new Address();
-            adr.setNom(nom[i]);
-            adr.setNumero(Integer.parseInt(numero[i]));
-            adr.setRue(rue[i]);
-            adr.setVille(ville[i]);
-            adr.setCodePostal(Integer.parseInt(codepostal[i]));
+            adr.setNom(nom);
+            adr.setNumero(Integer.parseInt(numero));
+            adr.setRue(rue);
+            adr.setVille(ville);
+            adr.setCodePostal(Integer.parseInt(codepostal));
             adr.setUser(user);
             DaoFactory.getAddressDao().Save(adr);
-            listaddress.add(adr);
-        }
-        user.getAddress().addAll(listaddress);
+        user.getAddress().add(adr);
         DaoFactory.getUsersDao().update(user);
     }
     public void UpdateAddress(Address address,String nom,String numero, String rue, String ville, String codepostal,Users user) throws DataException {

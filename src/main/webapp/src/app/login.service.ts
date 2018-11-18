@@ -25,14 +25,10 @@ export class LoginService {
     return this.http.post(this.urlLogin, { email, password } , httpOptions)
       .pipe(
         catchError(this.handleError('login', []))
-      ).subscribe(data => {
-          this.router.navigate(['/dashboard']);
-        },
-        error => {
-          console.log('Error', error);
-        });
+      );
     }
-  register(email: String, password: String, nom: String, prenom: String, age: String, sex: String, centreInt: String[]) {return this.http.post(this.urlRegister, { email: email, password: password, nom: nom, prenom: prenom, age: age, sex: sex, centreInt: centreInt} , httpOptions)
+  register(email: String, password: String, nom: String, prenom: String, age: String, sex: String, centreInt: String[]) {
+    return this.http.post(this.urlRegister, { email: email, password: password, nom: nom, prenom: prenom, age: age, sex: sex, centreInt: centreInt} , httpOptions)
       .pipe(catchError(this.handleError('register', [])))
       .subscribe(data => {
           this.router.navigate(['/dashboard']);
@@ -41,14 +37,42 @@ export class LoginService {
           console.log('Error', error);
         });
   }
+  GetAllUsers(): Observable<any>{
+    return this.http.get('/AllUsers')
+      .pipe(
+        tap(data => console.log(data)),
+        catchError(this.handleError('Delete Evenement'))
+      )
+  }
+  SignalCompte(nom: String,prenom: String,Description: String): Observable<any>{
+    return this.http.post('SignalCompte',{nom:nom,prenom:prenom,description: Description})
+      .pipe(
+        tap(data => console.log(data)),
+        catchError(this.handleError('Delete Evenement'))
+      )
+  }
+  ListSignalCompte():Observable<any>{
+    return this.http.get('ListSignalCompte')
+      .pipe(
+        tap(data =>console.log(data)),
+        catchError(this.handleError('ListSignalCompte'))
+      )
+  }
+  ConfirmSignalCompte(Email : String) : Observable<any>{
+    return this.http.post('ConfirmSignalCompte',{Email : Email})
+      .pipe(
+        tap(data =>console.log(data)),
+        catchError(this.handleError('ConfirmSignalCompte'))
+      )
+  }
   private handleError<T> (operation = 'operation', result?: T) {
     return (erreur: any): Observable<T> => {
        // log to console instead
       // TODO: better job of transforming error for user consumption
       this.log(`${erreur.message}`);
-
       console.log(`${erreur.message}`);
       // Let the app keep running by returning an empty result.
+      this.router.navigate([`/${operation}`]);
       return of(result as T);
     };
   }

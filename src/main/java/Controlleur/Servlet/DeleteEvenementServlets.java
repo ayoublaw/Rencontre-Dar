@@ -5,6 +5,7 @@ import Controlleur.Service.AuthentificationService;
 import Controlleur.Service.EvenementService;
 import Controlleur.Service.JsonService;
 import Model.Entity.Users;
+import org.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,10 +19,11 @@ public class DeleteEvenementServlets extends HttpServlet {
     AuthentificationService auth = new AuthentificationService();
     EvenementService even = new EvenementService();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String evenementID = request.getParameter("evenementId");
+        JSONObject jsonobj = JsonService.getJsonObjectFromBufferReader(request.getReader());
+        int evenementID = jsonobj.getInt("evenementId");
         try {
             Users userCurrent = auth.CurrentUser(request);
-            even.DeleteEvenement(userCurrent,Integer.parseInt(evenementID));
+            even.DeleteEvenement(userCurrent,evenementID);
             JsonService.StringJsonResponse(response,"text","Evenement bien Supprimer");
         } catch (DataException e) {
             JsonService.ErrJsonResponse(response,e);

@@ -13,13 +13,12 @@ import java.io.IOException;
 public class JsonService {
     public static void ErrJsonResponse(HttpServletResponse response, DataException e) throws IOException {
         JsonObject jsonO = new JsonObject();
-        jsonO.addProperty("Err",e.toString());
+        jsonO.addProperty("ERR",e.getMessage());
         String json = new Gson().toJson(jsonO);
 
         response.setContentType("application/json");
         response.setStatus(404);
         response.setCharacterEncoding("UTF-8");
-        response.sendError(404,e.getMessage());
         response.getWriter().write(json);
     }
     public static void StringJsonResponse(HttpServletResponse response,String attribut,String text) throws IOException {

@@ -1,5 +1,6 @@
 package Model.Entity;
 
+import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -17,9 +18,11 @@ public class CentreInt implements Serializable {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Expose
     private Integer id;
 
     @Column
+    @Expose
     private String Name;
 
     @ManyToOne

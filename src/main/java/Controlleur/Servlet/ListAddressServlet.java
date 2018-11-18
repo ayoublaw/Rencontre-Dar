@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "ListAddressServlet",urlPatterns = "/Address")
+@WebServlet(name = "ListAddressServlet",urlPatterns = "/ListAddress")
 public class ListAddressServlet extends HttpServlet {
     AuthentificationService auth = new AuthentificationService();
     AddressService adr = new AddressService();
