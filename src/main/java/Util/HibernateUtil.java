@@ -16,16 +16,7 @@ public class HibernateUtil {
 
                 URI dbUri = new URI(DATABASE_URL);
                 String dbUrl = System.getenv("JDBC_DATABASE_URL");
-                String username = dbUri.getUserInfo().split(":")[0];
-                String password = dbUri.getUserInfo().split(":")[1];
-                System.out.println(dbUrl);
-                configuration.setProperty("hibernate.connection.username", username);
-                configuration.setProperty("hibernate.connection.password", password);
                 configuration.setProperty("hibernate.connection.url", dbUrl);
-                configuration.setProperty("connection.username", username);
-                configuration.setProperty("connection.password", password);
-                configuration.setProperty("connection.url", dbUrl);
-
                 configuration.getProperties().list(System.out);
             }
 
