@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {LoginService} from '../login.service';
 import {Router} from "@angular/router";
+import {ErrMessageService} from "../err-message.service";
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private loginService: LoginService,
+    private MessageErr: ErrMessageService,
     private router: Router
   ) { }
 
@@ -18,11 +20,14 @@ export class LoginComponent implements OnInit {
   }
   login(email: String, password: String) {
     this.loginService.login(email, password )
-      .subscribe(data => {
-          this.router.navigate(['/dashboard']);
-        },
-        error => {
-         this.router.navigate(['/login']);
+      .subscribe(
+        data => {
+          if(this.MessageErr.message == 'Email or Username Invalid'){
+            this.router.navigate(['/login'])
+          }
+          else {
+            this.router.navigate(['/dashboard'])
+          }
         });
   }
 }

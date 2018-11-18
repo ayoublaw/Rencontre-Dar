@@ -24,18 +24,17 @@ export class LoginService {
   login(email: String, password: String) {
     return this.http.post(this.urlLogin, { email, password } , httpOptions)
       .pipe(
+        tap(data =>console.log(data)),
         catchError(this.handleError('login', []))
       );
     }
   register(email: String, password: String, nom: String, prenom: String, age: String, sex: String, centreInt: String[]) {
     return this.http.post(this.urlRegister, { email: email, password: password, nom: nom, prenom: prenom, age: age, sex: sex, centreInt: centreInt} , httpOptions)
-      .pipe(catchError(this.handleError('register', [])))
-      .subscribe(data => {
-          this.router.navigate(['/dashboard']);
-        },
-        error => {
-          console.log('Error', error);
-        });
+      .pipe(
+        tap(data => console.log(data)),
+        catchError(this.handleError('register', []))
+      )
+      ;
   }
   GetAllUsers(): Observable<any>{
     return this.http.get('/AllUsers')
@@ -67,12 +66,9 @@ export class LoginService {
   }
   private handleError<T> (operation = 'operation', result?: T) {
     return (erreur: any): Observable<T> => {
-       // log to console instead
-      // TODO: better job of transforming error for user consumption
-      this.log(`${erreur.message}`);
-      console.log(`${erreur.message}`);
+      console.log(erreur);
+      this.log(`${erreur.error.ERR}`);
       // Let the app keep running by returning an empty result.
-      this.router.navigate([`/${operation}`]);
       return of(result as T);
     };
   }

@@ -1,3 +1,3 @@
 <div>
-  <p>{{errMessage.message}}</p>
+  <p *ngIf="errMessage.message != null" class="label label-danger">{{errMessage.message}}</p>
 </div>
