@@ -11,6 +11,7 @@ export class EvenementComponent implements OnInit {
   Directions: any;
   placesBeetwen: any;
   MessageAcc; String;
+  PlaceDetails: any[] = [];
   constructor(
     public eventService: EvenementService
   ) { }
@@ -21,7 +22,17 @@ export class EvenementComponent implements OnInit {
   }
   getEventCanParticipate(){
     this.eventService.getEventCanParticipate()
-      .subscribe(data => {this.ListEvent = null; this.ListEvent = data});
+      .subscribe(data => {
+        this.ListEvent = null;
+        this.ListEvent = data;
+        if(this.ListEvent != null){
+          for(let event of this.ListEvent){
+            if(event.Lieu != null){
+              this.PlaceDeatil(event.Lieu);
+            }
+          }
+        }
+      });
   }
   directions(adr1: String,adr2: String){
     this.Directions = null;
@@ -39,6 +50,8 @@ export class EvenementComponent implements OnInit {
       this.MessageAcc = data.message;
       })
   }
-
-
+  PlaceDeatil(id:String){
+    return this.eventService.PlaceDetails(id)
+      .subscribe(data => this.PlaceDetails.push(data))
+  }
 }

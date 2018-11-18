@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit {
     this.loginSrevice.register(email, password, nom, prenom, age, sex, centreInt)
       .subscribe(
         data => {
-          if(this.MessageErr.message == 'Email Already used'){
+          if(this.MessageErr.message == 'Email Already used' || this.MessageErr.message === undefined){
             this.router.navigate(['/login'])
           }
           else {

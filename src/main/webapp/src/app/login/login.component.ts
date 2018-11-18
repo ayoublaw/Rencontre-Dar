@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
     this.loginService.login(email, password )
       .subscribe(
         data => {
-          if(this.MessageErr.message == 'Email or Username Invalid'){
+          if(this.MessageErr.message == 'Email or Username Invalid' || this.MessageErr.message === undefined){
             this.router.navigate(['/login'])
           }
           else {

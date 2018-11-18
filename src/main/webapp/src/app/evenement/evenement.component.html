@@ -1,13 +1,13 @@
 <div class="steamline">
   <hr>
-  <div *ngIf="eventService.MessageErr != null && eventService.MessageErr !== undefined" class="alert alert-danger">{{ eventService.MessageErr }}</div>
   <div *ngIf="MessageAcc != null" class="alert alert-success">{{ MessageAcc }}</div>
   <div *ngIf="ListEvent == null">
     <p>On a Pas d'evenement a vous Proposer</p>
   </div>
   <div *ngFor="let event of ListEvent">
     <div *ngIf="event.NbrParticipant > 2" class="sl-item " style="height: auto; overflow: auto" >
-      <div class="m-l-40">
+     <div *ngFor="let place of PlaceDeatils">
+      <div *ngIf="place?.place_id == event.Lieu" class="m-l-40">
         <a class="text-info">{{ event.user_create.nom}} {{ event.user_create.prenom }}</a> <span class="sl-date">{{ event.date}}</span>
         <div class="m-t-20 row">
           <div class="col-md-2 col-xs-12">
@@ -62,6 +62,7 @@
           </div>
         </div>
       </div>
+     </div>
     </div>
     <div *ngIf="event.NbrParticipant == 2" class="sl-item " style="height: auto; overflow: auto">
       <div class="m-l-40">

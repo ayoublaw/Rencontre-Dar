@@ -25,6 +25,7 @@ export class InvitationComponent implements OnInit {
     return this.eventService.Propositions()
       .subscribe(data => {
         this.Propositions = data;
+        this.PlaceDeatils = [];
         if(this.Propositions != null){
           for(let propo of this.Propositions){
             this.PlaceDeatil(propo.Lieu);
@@ -48,15 +49,15 @@ export class InvitationComponent implements OnInit {
   AccepteOrRefuse(evenementID: number, b: Boolean){
     this.eventService.AccepteOrRefuse(evenementID,b)
       .subscribe(data =>  {
+        this.MessageAcc = data.message;
         this.Proposition();
-        this.MessageAcc = data.message
       })
   }
   DeleteParticipation(evenementId : number){
     this.eventService.DeleteParticipation(evenementId)
       .subscribe(data =>{
-        this.ResponsesforOurPropositions();
         this.MessageAcc = data.message;
+        this.ResponsesforOurPropositions();
       })
   }
 }
