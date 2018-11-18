@@ -22,7 +22,7 @@ public class HibernateUtil {
 
 
             ServiceRegistryBuilder registry = new ServiceRegistryBuilder();
-            registry.applySettings(configuration.getProperties());
+            registry.configure("hibernate.cfg.xml").applySettings(configuration.getProperties());
             ServiceRegistry serviceRegistry = registry.buildServiceRegistry();
 
             return configuration.buildSessionFactory(serviceRegistry);
