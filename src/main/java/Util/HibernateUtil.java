@@ -1,6 +1,7 @@
 package Util;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
@@ -21,9 +22,9 @@ public class HibernateUtil {
             }
 
 
-            ServiceRegistryBuilder registry = new ServiceRegistryBuilder();
+            StandardServiceRegistryBuilder registry = new StandardServiceRegistryBuilder();
             registry.configure("hibernate.cfg.xml").applySettings(configuration.getProperties());
-            ServiceRegistry serviceRegistry = registry.buildServiceRegistry();
+            ServiceRegistry serviceRegistry = registry.build();
 
             return configuration.buildSessionFactory(serviceRegistry);
 
