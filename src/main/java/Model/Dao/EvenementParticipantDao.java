@@ -22,6 +22,7 @@ public class EvenementParticipantDao extends Dao<Evenement_Participant> {
         q.setParameter("x",ev.getId()).setParameter("y",user.getId());
         Evenement_Participant list = (Evenement_Participant) q.list().get(0);
         s.close();
+        factory.close();
         return list;
     }
 }

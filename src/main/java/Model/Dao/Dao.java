@@ -26,6 +26,7 @@ public class Dao<E> implements IDao<E> {
         s.save(entity);
         s.getTransaction().commit();
         s.close();
+        factory.close();
     }
     public E getById(Serializable id) {
         SessionFactory factory = HibernateUtil.getSessionFactory();
@@ -34,6 +35,7 @@ public class Dao<E> implements IDao<E> {
         E entity = (E) s.get(clazz, id);
         s.getTransaction().commit();
         s.close();
+        factory.close();
         return entity;
     }
     public E update(E entity) {
@@ -43,6 +45,7 @@ public class Dao<E> implements IDao<E> {
         s.update(entity);
         s.getTransaction().commit();
         s.close();
+        factory.close();
         return null;
     }
 
@@ -54,6 +57,7 @@ public class Dao<E> implements IDao<E> {
         s.delete(e);
         s.getTransaction().commit();
         s.close();
+        factory.close();
         return e;
     }
     @Override
@@ -63,6 +67,7 @@ public class Dao<E> implements IDao<E> {
         Query q = s.createQuery("from " + clazz.getSimpleName());
         List<E> list = q.list();
         s.close();
+        factory.close();
         return list;
     }
 

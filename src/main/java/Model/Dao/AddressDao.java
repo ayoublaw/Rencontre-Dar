@@ -17,6 +17,7 @@ public class AddressDao extends Dao<Address> {
         q.setParameter("x",user.getId());
         List<Address> list = q.list();
         s.close();
+        factory.close();
         return list;
     }
     public Address selectUserOneAddress(Users user,String nom) {
@@ -26,6 +27,7 @@ public class AddressDao extends Dao<Address> {
         q.setParameter("x",user.getId()).setParameter("y",nom);
         List<Address> list = q.list();
         s.close();
+        factory.close();
         return list.get(0);
     }
 

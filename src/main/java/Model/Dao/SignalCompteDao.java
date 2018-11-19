@@ -17,6 +17,7 @@ public class SignalCompteDao extends Dao<SignalCompte> {
         q.setParameter("x",user.getId());
         List<SignalCompte> list = q.list();
         s.close();
+        factory.close();
         return list;
 
     }

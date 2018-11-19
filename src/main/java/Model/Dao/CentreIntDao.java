@@ -16,6 +16,7 @@ public class CentreIntDao  extends Dao<CentreInt>{
         q.setParameter("x",name).setParameter("y",user.getId());
         CentreInt centreint = (CentreInt) q.list().get(0);
         session.close();
+        factory.close();
         return centreint;
 
     }

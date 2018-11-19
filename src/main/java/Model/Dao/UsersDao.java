@@ -19,6 +19,7 @@ public class UsersDao extends Dao<Users> {
         q.setParameter("x",Nom).setParameter("y",prenom);
         Users user = q.list().size() == 0 ? null : (Users) q.list().get(0);
         session.close();
+        factory.close();
         return user;
     }
 
@@ -30,6 +31,7 @@ public class UsersDao extends Dao<Users> {
         q.setParameter("x",Email);
         Users user = q.list().size() == 0 ? null : (Users) q.list().get(0);
         session.close();
+        factory.close();
         return user;
     }
 
