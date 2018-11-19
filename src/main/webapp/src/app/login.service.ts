@@ -15,21 +15,19 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class LoginService {
-  private urlLogin = 'http://localhost:5000/login';
-  private urlRegister = 'http://localhost:5000/register';
   constructor(
     private http: HttpClient,
     private errMessage: ErrMessageService,
     private router : Router) {}
   login(email: String, password: String) {
-    return this.http.post(this.urlLogin, { email, password } , httpOptions)
+    return this.http.post('login', { email, password } , httpOptions)
       .pipe(
         tap(data =>console.log(data)),
         catchError(this.handleError('login', []))
       );
     }
   register(email: String, password: String, nom: String, prenom: String, age: String, sex: String, centreInt: String[]) {
-    return this.http.post(this.urlRegister, { email: email, password: password, nom: nom, prenom: prenom, age: age, sex: sex, centreInt: centreInt} , httpOptions)
+    return this.http.post('register', { email: email, password: password, nom: nom, prenom: prenom, age: age, sex: sex, centreInt: centreInt} , httpOptions)
       .pipe(
         tap(data => console.log(data)),
         catchError(this.handleError('register', []))
