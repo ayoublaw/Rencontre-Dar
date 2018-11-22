@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {EvenementService} from "../evenement.service";
+import {AddressService} from "../address.service";
 
 @Component({
   selector: 'app-profil',
@@ -12,7 +13,8 @@ export class ProfilComponent implements OnInit {
   MessageAcc :any;
   PlaceDetails :any[] = [];
   constructor(
-    public eventService: EvenementService
+    public eventService: EvenementService,
+    public addressService: AddressService
   ) { }
 
   ngOnInit() {
@@ -44,15 +46,22 @@ export class ProfilComponent implements OnInit {
   }
   DeleteEvent(evenementId: number){
     return this.eventService.DeleteEvenement(evenementId)
-      .subscribe(data => this.MessageAcc = data.message)
+      .subscribe(data => {
+        this.GetMyEventActif();
+        this.MessageAcc = data.message;
+      })
   }
   DeleteParticipation(evenementId: number){
     return this.eventService.DeleteParticipation(evenementId)
-      .subscribe(data => this.MessageAcc = data.message)
+      .subscribe(data => {
+        this.GetMyParticiActif();
+        this.MessageAcc = data.message;
+      })
   }
   PlaceDeatil(id:String){
     return this.eventService.PlaceDetails(id)
       .subscribe(data => this.PlaceDetails.push(data))
   }
+
 
 }

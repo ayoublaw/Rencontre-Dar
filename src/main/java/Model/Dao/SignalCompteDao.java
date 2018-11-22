@@ -13,7 +13,7 @@ public class SignalCompteDao extends Dao<SignalCompte> {
     public List<SignalCompte> getSignalCompteForoneUser(Users user){
         SessionFactory factory = HibernateUtil.getSessionFactory();
         Session s = factory.openSession();
-        Query q = s.createQuery("select t from " + SignalCompte.class.getSimpleName()+" t where User_signal = :x");
+        Query q = s.createQuery("select t from " + SignalCompte.class.getSimpleName()+" t where user_signal_id = :x");
         q.setParameter("x",user.getId());
         List<SignalCompte> list = q.list();
         s.close();

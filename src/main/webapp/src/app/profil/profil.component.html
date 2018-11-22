@@ -34,6 +34,11 @@
           <th>Supprimer</th>
         </tr>
         </thead>
+        <tbody *ngIf="eventActif == null">
+        <tr>
+          <p>vous avez pas d'evenement</p>
+        </tr>
+        </tbody>
         <tbody *ngFor="let event of eventActif">
         <tr>
           <td>{{ event.Description }}</td>
@@ -44,7 +49,7 @@
           <td *ngIf="event.etat === 'AttendAcceptation'"><span class="label label-table label-danger">{{event.etat}}</span></td>
           <td *ngIf="event.etat === 'Complet'"><span class="label label-table label-success">{{event.etat}}</span></td>
           <td *ngIf="event.etat === 'Expirer'"><span class="label label-table label-inverse">{{event.etat}}</span></td>
-          <td (click)="DeleteEvent(event.id)"><i class="fa fa-close text-danger"></i></td>
+          <td (click)="DeleteEvent(event.id)"><a><span class="text-danger">X</span></a></td>
         </tr>
         <tr *ngFor="let place of PlaceDetails">
           <div *ngIf="event?.Lieu == place?.result?.place_id" class="m-t-20 row">
@@ -79,17 +84,22 @@
           <th>Supprimer</th>
         </tr>
         </thead>
+        <tbody *ngIf="eventParic == null">
+        <tr>
+          <p>vous avez pas de Participation</p>
+        </tr>
+        </tbody>
         <tbody *ngFor="let event of eventParic">
         <tr>
           <td>{{ event.Description }}</td>
           <td>{{ event.date}}</td>
-          <td>{{ event.users_participate.length /event.NbrParticipant - 1}}</td>
+          <td>{{ event.users_participate.length}} / {{event.NbrParticipant - 1}}</td>
           <td>{{ event.centreInt.Name}}</td>
           <td *ngIf="event.etat === 'Invitation'"><span class="label label-table label-danger">{{event.etat}}</span></td>
           <td *ngIf="event.etat === 'AttendAcceptation'"><span class="label label-table label-danger">{{event.etat}}</span></td>
           <td *ngIf="event.etat === 'Complet'"><span class="label label-table label-success">{{event.etat}}</span></td>
           <td *ngIf="event.etat === 'Expirer'"><span class="label label-table label-inverse">{{event.etat}}</span></td>
-          <td (click)="DeleteParticipation(event.id)"><i class="fa fa-close text-danger"></i></td>
+          <td (click)="DeleteParticipation(event.id)"><a><span class="text-danger">X</span></a></td>
         </tr>
         <tr *ngFor="let place of PlaceDeatils">
           <div *ngIf="event?.Lieu == place?.result?.place_id" class="m-t-20 row">

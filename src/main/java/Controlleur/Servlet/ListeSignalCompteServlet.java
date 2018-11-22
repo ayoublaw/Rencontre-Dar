@@ -5,6 +5,7 @@ import Controlleur.Service.JsonService;
 import Controlleur.Service.SignalCompteService;
 import Model.Entity.SignalCompte;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.hibernate.Session;
 import org.json.JSONObject;
 
@@ -28,9 +29,8 @@ public class ListeSignalCompteServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<SignalCompte> ListSignalCompte = null;
         try {
-        ListSignalCompte = sign.ListSignalCompte();
+        List<SignalCompte> ListSignalCompte = sign.ListSignalCompte();
         HttpSession session = request.getSession(true);
         if(session.isNew() || !session.getAttribute("Role").equals("Admin")){
             String json = new Gson().toJson("ERR : you don't have permition");
@@ -41,8 +41,8 @@ public class ListeSignalCompteServlet extends HttpServlet {
             response.getWriter().write(json);
 
         }
-        String json = new Gson().toJson(ListSignalCompte);
-
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        String json = gson.toJson(ListSignalCompte);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.setStatus(200);

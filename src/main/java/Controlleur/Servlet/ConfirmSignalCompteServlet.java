@@ -29,13 +29,9 @@ public class ConfirmSignalCompteServlet extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);
         }
-
         sign.ConfirmSignalCompte(Email);
-
         JsonService.StringJsonResponse(response,"message","L'utilisateur "+Email+" est bloqué");
     }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }

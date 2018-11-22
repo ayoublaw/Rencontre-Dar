@@ -28,7 +28,12 @@
   <div class="form-group">
     <label class="col-md-12">Saisie votre Adresse pour l'evenement</label>
     <div class="col-md-12">
-      <input type="text" #adr_prop class="form-control form-control-line"  >
+      <input [formControl]="myControl" [matAutocomplete]="auto" type="text" #adr_prop class="form-control form-control-line"  >
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of addressService.address" [value]="option.Numero + option.Rue + option.Ville">
+          {{option.Nom}}
+        </mat-option>
+      </mat-autocomplete>
       <a *ngIf="nbrpart.value > 2" (click)="getPlace(adr_prop.value,myModelProperty)"  class="btn btn-success">Chercher des places</a>
     </div>
   </div>
@@ -69,7 +74,7 @@
     </div>
   </div>
   <div *ngIf="evenService.MessageErr != null && evenService.MessageErr !== undefined" class="alert alert-danger">{{ evenService.MessageErr }}</div>
-  <div class="form-group">
+  <div class="form-group row">
     <div class="col-sm-12">
       <button class="btn btn-success" (click)="Addaevent(descri.value,nbrpart.value,date.value,myModelProperty,RadioModel,adr_prop.value)">Ajouter Evenement</button>
     </div>

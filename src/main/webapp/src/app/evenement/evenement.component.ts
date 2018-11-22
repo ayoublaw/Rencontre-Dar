@@ -26,6 +26,7 @@ export class EvenementComponent implements OnInit {
         this.ListEvent = null;
         this.ListEvent = data;
         if(this.ListEvent != null){
+          this.PlaceDetails = [];
           for(let event of this.ListEvent){
             if(event.Lieu != null){
               this.PlaceDeatil(event.Lieu);

@@ -15,6 +15,7 @@ const httpOptions = {
 export class AddressService {
   public messageJuste ;
   public messageErr  ;
+  public address;
   private url = '/addAdress';
   private urlget = '/ListAddress';
   constructor(
@@ -34,7 +35,7 @@ export class AddressService {
   getAddres() : Observable<any>{
     return this.http.get(this.urlget)
       .pipe(
-        tap(data => console.log(data))
+        tap(data => this.address = data)
       )
   }
 }

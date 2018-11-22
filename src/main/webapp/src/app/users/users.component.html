@@ -19,7 +19,7 @@
           <td>{{ user.nom}}</td>
           <td>{{ user.prenom}}</td>
           <td>{{ user.age}}</td>
-           <td (click)="affiche(user.id)"><i class="fa fa-sign-out text-danger"></i></td>
+           <td (click)="affiche(user.id)"><a><span class="text-danger">X</span></a></td>
         </tr>
         <tr *ngIf="user.id == Affiche">
           <div class="m-t-30">

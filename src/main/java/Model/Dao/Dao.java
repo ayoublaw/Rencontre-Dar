@@ -52,7 +52,7 @@ public class Dao<E> implements IDao<E> {
     @Override
     public E remove(E e) {
         SessionFactory factory = HibernateUtil.getSessionFactory();
-        Session s = factory.openSession();
+        Session s = factory.getCurrentSession();
         s.beginTransaction();
         s.delete(e);
         s.getTransaction().commit();

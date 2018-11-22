@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {EvenementService} from "../evenement.service";
 import {Router} from "@angular/router";
+import {AddressService} from "../address.service";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-create-evenement',
@@ -15,10 +17,12 @@ export class CreateEvenementComponent implements OnInit {
   centreIntTab: String[] = ['accounting', 'airport', 'amusement_park' , 'aquarium', 'art_gallery', 'atm'];
   myModelProperty: String;
   RadioModel: String;
+  myControl = new FormControl();
   constructor(
    public evenService : EvenementService,
-   public router: Router
-  ) { }
+   public router: Router,
+   public addressService : AddressService,
+) { }
 
   ngOnInit() {
     this.evenService.clean();

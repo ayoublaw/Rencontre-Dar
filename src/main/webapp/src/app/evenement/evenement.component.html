@@ -1,5 +1,5 @@
 <div class="steamline">
-  <hr>
+  <hr *ngIf="ListEvent != null">
   <div *ngIf="MessageAcc != null" class="alert alert-success">{{ MessageAcc }}</div>
   <div *ngIf="ListEvent == null">
     <p>On a Pas d'evenement a vous Proposer</p>
@@ -8,12 +8,13 @@
     <div *ngIf="event.NbrParticipant > 2" class="sl-item " style="height: auto; overflow: auto" >
      <div *ngFor="let place of PlaceDeatils">
       <div *ngIf="place?.place_id == event.Lieu" class="m-l-40">
-        <a class="text-info">{{ event.user_create.nom}} {{ event.user_create.prenom }}</a> <span class="sl-date">{{ event.date}}</span>
+        <a class="text-info">{{ event.user_create.nom}} {{ event.user_create.prenom }}</a>
         <div class="m-t-20 row">
           <div class="col-md-2 col-xs-12">
             <img src="" alt="user" class="img-responsive" />
           </div>
           <div class="col-md-9 col-xs-12">
+            <p><span class="sl-date">{{ event.date}}</span></p>
             <p><strong>Description :</strong> {{ event.Description}}</p>
             <p><strong>Nombre de Paticipant :</strong> {{event.users_participate.length }}/{{ event.NbrParticipant - 1}}</p>
             <p><strong>Date : </strong> {{ event.date}}</p>
@@ -40,14 +41,14 @@
                 <div><strong>Distance : </strong><p> {{leg.distance.text}}</p></div>
               </div>
               <div>
-                <strong> Trajet :  </strong>
+                <p><strong> Trajet :  </strong></p>
                 <div style="display: inline-block">
                   <div *ngFor="let step of leg.steps" style="display: inline-block">
                     <i *ngIf="step.travel_mode === 'WALKING'" class="material-icons">directions_walk</i>
                     <span *ngIf="step.travel_mode === 'TRANSIT' && step.transit_details.line.vehicle.local_icon == null"> <img [src]="step.transit_details.line.vehicle.icon" style="display: inline-block"> </span>
                     <span *ngIf="step.travel_mode === 'TRANSIT' && step.transit_details.line.vehicle.local_icon != null"> <img [src]="step.transit_details.line.vehicle.local_icon" style="display: inline-block"> </span>
                     <span *ngIf="step.travel_mode === 'TRANSIT'" [ngStyle]="{'backgroundColor':step.transit_details.line.color,'color' : step.transit_details.line.text_color}" style="color: #ffffff"> {{ step.transit_details.line.short_name}} </span>
-                    <span> {{step.duration.text}} </span>
+                    <span> {{ step.duration.text }} </span>
                     <span> > </span>
                   </div>
                 </div>
@@ -80,10 +81,10 @@
           </div>
         </div>
         <div class="m-t-30 row" *ngFor="let place of placesBeetwen">
-            <div class="col-md-4 col-xs-12">
+            <div class="col-md-2 col-xs-12">
               <img *ngIf="place.photos != null" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={{place.photos[0]?.photo_reference}}&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es" alt="user" class="img-responsive" style="height: 150px;width: 150px"  />
               <img *ngIf="place.photos == null" src="../../assets/image-not-found-1.png" alt="user" class="img-responsive" style="height: 150px;width: 150px"  /></div>
-            <div class="col-md-8 col-xs-12">
+            <div class="col-md-9 col-xs-12">
               <input type="Radio" [(ngModel)]="RadioModel" name="RadioModel" [value]="place?.place_id">
               <a  class="text-info">  {{place?.name}}  </a> <span class="sl-item">{{place?.rating}}/5</span>
               <p><strong>Address :</strong> {{place?.vicinity}} </p>
@@ -97,14 +98,14 @@
                         <div><strong>Distance : </strong><p> {{leg.distance.text}}</p></div>
                       </div>
                       <div>
-                        <strong> Trajet :  </strong>
+                        <p><strong> Trajet :  </strong></p>
                         <div style="display: inline-block">
                           <div *ngFor="let step of leg.steps" style="display: inline-block">
                             <i *ngIf="step.travel_mode === 'WALKING'" class="material-icons">directions_walk</i>
                             <span *ngIf="step.travel_mode === 'TRANSIT' && step.transit_details.line.vehicle.local_icon == null"> <img [src]="step.transit_details.line.vehicle.icon" style="display: inline-block"> </span>
                             <span *ngIf="step.travel_mode === 'TRANSIT' && step.transit_details.line.vehicle.local_icon != null"> <img [src]="step.transit_details.line.vehicle.local_icon" style="display: inline-block"> </span>
                             <span *ngIf="step.travel_mode === 'TRANSIT'" [ngStyle]="{'backgroundColor':step.transit_details.line.color,'color' : step.transit_details.line.text_color}" style="color: #ffffff"> {{ step.transit_details.line.short_name}} </span>
-                            <span> {{step.duration.text}} </span>
+                            <span> {{ step.duration.text }} </span>
                             <span> > </span>
                           </div>
                         </div>
