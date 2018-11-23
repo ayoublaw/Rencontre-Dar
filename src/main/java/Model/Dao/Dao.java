@@ -21,30 +21,27 @@ public class Dao<E> implements IDao<E> {
 
     public void Save(E entity) {
         SessionFactory factory = HibernateUtil.getSessionFactory();
-        Session s = factory.openSession();
+        Session s = factory.getCurrentSession();
         s.beginTransaction();
         s.save(entity);
         s.getTransaction().commit();
-        s.close();
         factory.close();
     }
     public E getById(Serializable id) {
         SessionFactory factory = HibernateUtil.getSessionFactory();
-        Session s = factory.openSession();
+        Session s = factory.getCurrentSession();
         s.beginTransaction();
         E entity = (E) s.get(clazz, id);
         s.getTransaction().commit();
-        s.close();
         factory.close();
         return entity;
     }
     public E update(E entity) {
         SessionFactory factory = HibernateUtil.getSessionFactory();
-        Session s = factory.openSession();
+        Session s = factory.getCurrentSession();
         s.beginTransaction();
         s.update(entity);
         s.getTransaction().commit();
-        s.close();
         factory.close();
         return null;
     }
@@ -56,17 +53,17 @@ public class Dao<E> implements IDao<E> {
         s.beginTransaction();
         s.delete(e);
         s.getTransaction().commit();
-        s.close();
         factory.close();
         return e;
     }
     @Override
     public List<E> selectAll() {
         SessionFactory factory = HibernateUtil.getSessionFactory();
-        Session s = factory.openSession();
+        Session s = factory.getCurrentSession();
+        s.beginTransaction();
         Query q = s.createQuery("from " + clazz.getSimpleName());
         List<E> list = q.list();
-        s.close();
+        s.getTransaction().commit();
         factory.close();
         return list;
     }

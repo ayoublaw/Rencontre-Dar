@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="row bg-title">
       <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-        <h4 class="page-title">DASHBOARD page</h4>
+        <img src="../../assets/logo.png" class="img logo">
       </div>
       <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
         <a href="/logout" class="btn btn-danger pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">Deconnecter</a>
@@ -15,9 +15,9 @@
       <div class="col-md-11 col-xs-12">
         <div class="white-box">
           <ul class="nav customtab nav-tabs" role="tablist">
-            <li role="presentation" class="nav-item"><a href="#home" (click)="eventService.clean()" class="nav-link active" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"></span><span class="hidden-xs"> Activity</span></a></li>
+            <li role="presentation" class="nav-item"><a href="#home" (click)="eventService.clean()" class="nav-link active" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true"><span class="visible-xs"></span><span class="hidden-xs"> Propositions</span></a></li>
             <li role="presentation" class="nav-item"><a href="#profile" (click)="eventService.clean()" class="nav-link" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"></span> <span class="hidden-xs">Profile</span></a></li>
-            <li role="presentation" class="nav-item"><a href="#messages" (click)="eventService.clean()" class="nav-link" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"></span> <span class="hidden-xs">Message</span></a></li>
+            <li role="presentation" class="nav-item"><a href="#messages" (click)="eventService.clean()" class="nav-link" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"></span> <span class="hidden-xs">Notification <span class="label-rounded label-danger" *ngIf="eventService.propositions?.size + eventService.responses?.size != 0">{{eventService.propositions?.size + eventService.responses?.size }} </span> </span></a></li>
             <li role="presentation" class="nav-item"><a href="#settings" class="nav-link" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="false"><span class="visible-xs"></span> <span class="hidden-xs">address</span></a></li>
             <li  role="presentation" class="nav-item"><a href="#createEv" (click)="eventService.clean()" class="nav-link" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="false"><span  class="visible-xs"></span> <span class="hidden-xs" >crée evenement</span></a></li>
             <li  role="presentation" class="nav-item"><a href="#Utilisateur" (click)="eventService.clean()" class="nav-link" aria-controls="messages" role="tab" data-toggle="tab" aria-expanded="false"><span  class="visible-xs"></span> <span class="hidden-xs" >Utilisateur</span></a></li>

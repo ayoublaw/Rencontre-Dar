@@ -20,7 +20,7 @@ public class SignalCompteService {
     public List<SignalCompte> ListSignalCompte() throws DataException {
      List<SignalCompte> list =DaoFactory.getSignalCompte().selectAll();
      if(list == null || list.isEmpty()){
-         throw new DataException("SignalCompte is empty");
+         throw new DataException("SignalCompte est vide");
      }
      return list;
     }

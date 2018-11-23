@@ -18,6 +18,8 @@ export class EvenementService {
   private urlDemande = "/GetPlaceNearby";
   private urlAdd = "/Addevent";
   private urlDir = "Directions";
+  public propositions;
+  public responses;
 
   constructor(
     private http: HttpClient
@@ -36,8 +38,8 @@ export class EvenementService {
         catchError(this.handleError('getPlace'))
       )
   }
-  directions(adr1: String,adr2: String){
-    return this.http.post(this.urlDir,{adr1: adr1,adr2: adr2})
+  directions(adr1: String,adr2: String,place_id: String){
+    return this.http.post(this.urlDir,{adr1: adr1,adr2: adr2,place_id: place_id})
       .pipe(
         tap(data => console.log(data)),
     catchError(this.handleError('directions'))
@@ -66,14 +68,16 @@ export class EvenementService {
   Propositions() : Observable<any>{
     return this.http.get('NotificatonsPropositions')
       .pipe(
-        tap(data => console.log(data)),
+        tap(data => this.propositions = data),
         catchError(this.handleError('Propositions'))
       )
   }
   ReponsesforOurPropositions(){
     return this.http.get('NotificationsResponse')
       .pipe(
-        tap(data => console.log(data)),
+        tap(data => {
+        console.log(data);
+        this.responses = data}),
         catchError(this.handleError('Responses'))
       )
   }
@@ -118,6 +122,13 @@ export class EvenementService {
       .pipe(
         tap(data => console.log(data)),
         catchError(this.handleError('Delete Evenement'))
+      )
+  }
+  CurrentUser(){
+    return this.http.get('currentUser')
+      .pipe(
+        tap(data => console.log(data)),
+        catchError(this.handleError('CurrentUser'))
       )
   }
 

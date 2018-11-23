@@ -12,6 +12,7 @@ export class ProfilComponent implements OnInit {
   eventParic :any;
   MessageAcc :any;
   PlaceDetails :any[] = [];
+  currentUser : any;
   constructor(
     public eventService: EvenementService,
     public addressService: AddressService
@@ -20,6 +21,7 @@ export class ProfilComponent implements OnInit {
   ngOnInit() {
     this.GetMyEventActif();
     this.GetMyParticiActif();
+    this.CurrentUser();
   }
   GetMyEventActif(){
     return this.eventService.GetMyEventActif()
@@ -61,6 +63,10 @@ export class ProfilComponent implements OnInit {
   PlaceDeatil(id:String){
     return this.eventService.PlaceDetails(id)
       .subscribe(data => this.PlaceDetails.push(data))
+  }
+  CurrentUser(){
+    this.eventService.CurrentUser()
+      .subscribe(data =>this.currentUser = data)
   }
 
 

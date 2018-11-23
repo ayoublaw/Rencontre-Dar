@@ -21,7 +21,8 @@ public class GetdirectionsServlet extends HttpServlet {
         JSONObject jsonobj = JsonService.getJsonObjectFromBufferReader(request.getReader());
         String adr1 = jsonobj.getString("adr1");
         String adr2 = jsonobj.getString("adr2");
-        String results = api.GetPlaceDirections(adr1,adr2);
+        String place_id = jsonobj.getString("place_id");
+        String results = api.GetPlaceDirections(adr1,adr2,place_id);
         response.setContentType("application/json");
         response.setStatus(200);
         response.setCharacterEncoding("UTF-8");

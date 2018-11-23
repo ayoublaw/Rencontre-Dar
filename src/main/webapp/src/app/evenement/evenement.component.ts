@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {EvenementService} from "../evenement.service";
+import {AddressService} from "../address.service";
 
 @Component({
   selector: 'app-evenement',
@@ -13,7 +14,8 @@ export class EvenementComponent implements OnInit {
   MessageAcc; String;
   PlaceDetails: any[] = [];
   constructor(
-    public eventService: EvenementService
+    public eventService: EvenementService,
+    public addressService: AddressService
   ) { }
 
   ngOnInit() {
@@ -35,9 +37,9 @@ export class EvenementComponent implements OnInit {
         }
       });
   }
-  directions(adr1: String,adr2: String){
+  directions(adr1: String,adr2: String,place_id: String){
     this.Directions = null;
-    this.eventService.directions(adr1,adr2)
+    this.eventService.directions(adr1,adr2,place_id)
       .subscribe(data => this.Directions = data)
   }
   getPlacesBeetwen(adr1: String,adr2: String,type: String){

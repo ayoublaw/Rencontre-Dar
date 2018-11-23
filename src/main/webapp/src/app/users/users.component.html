@@ -6,7 +6,6 @@
       <table class="table m-b-0 toggle-arrow-tiny">
         <thead>
         <tr>
-          <th>Email </th>
           <th>Nom </th>
           <th>Prenom </th>
           <th>Age  </th>
@@ -15,16 +14,15 @@
         </thead>
         <tbody *ngFor="let user of AllUsers">
         <tr>
-          <td>{{ user.email }}</td>
           <td>{{ user.nom}}</td>
-          <td>{{ user.prenom}}</td>
+          <td>{{ user?.prenom}}</td>
           <td>{{ user.age}}</td>
            <td (click)="affiche(user.id)"><a><span class="text-danger">X</span></a></td>
         </tr>
         <tr *ngIf="user.id == Affiche">
           <div class="m-t-30">
             <input type="text" #Description class="form-control form-control-line col-md-9" placeholder="Motif">
-            <a (click)="SignalCompte(user.nom,user.prenom,Description.value)" class="btn btn-primary col-md-2"> Signaler</a>
+            <a (click)="SignalCompte(user.nom,user?.prenom,Description.value)" class="btn btn-primary col-md-2"> Signaler</a>
           </div>
         </tr>
         </tbody>

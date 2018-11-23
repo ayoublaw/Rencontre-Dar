@@ -8,7 +8,8 @@ import org.hibernate.service.ServiceRegistryBuilder;
 import java.net.URI;
 
 public class HibernateUtil {
-    private static SessionFactory buildSessionFactory() {
+    public static final SessionFactory sessionFactory ;
+       static{
         try {
             Configuration configuration = new Configuration().configure();
             final String DATABASE_URL = System.getenv("DATABASE_URL");
@@ -25,17 +26,18 @@ public class HibernateUtil {
             registry.applySettings(configuration.getProperties());
             ServiceRegistry serviceRegistry = registry.buildServiceRegistry();
 
-            return configuration.buildSessionFactory(serviceRegistry);
+            sessionFactory = configuration.buildSessionFactory(serviceRegistry);
 
         } catch (Throwable ex) {
             // Make sure you log the exception, as it might be swallowed
             System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
         }
+       }
 
-    }
+
     public static SessionFactory getSessionFactory(){
-        return buildSessionFactory();
-    }
+       return sessionFactory;
+       }
 }
 

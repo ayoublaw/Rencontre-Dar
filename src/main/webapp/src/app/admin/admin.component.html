@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="row bg-title">
       <div class="col-lg-6 col-md-4 col-sm-4 col-xs-12">
-        <h4 class="page-title">Admin page</h4>
+        <img src="../../assets/logo.png" class="img logo">
       </div>
       <div class="col-lg-6 col-sm-8 col-md-8 col-xs-12">
         <a href="/logout" class="btn btn-danger pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">Deconnecter</a>
@@ -25,11 +25,14 @@
             </thead>
             <tbody *ngFor="let Sign of listSignalCompte">
             <tr>
-              <td>{{ Sign.user_create_signal.email }}</td>
-              <td>{{ Sign.user_signal.email}}</td>
-              <td>{{ Sign.Name}}</td>
+              <td>{{ Sign?.user_create_signal.nom }} {{ Sign?.user_create_signal.prenom }}</td>
+              <td>{{ Sign?.user_signal.nom}} {{ Sign?.user_signal.prenom}}</td>
+              <td>{{ Sign?.Name}}</td>
               <td (click)="ConfirmSignalCompte(Sign.user_signal?.email)"><a><span class="text-danger">X</span></a></td>
             </tr>
+            </tbody>
+            <tbody *ngIf="listSignalCompte == null">
+            <p>Y'a pas de message a te montrer</p>
             </tbody>
           </table>
         </div>

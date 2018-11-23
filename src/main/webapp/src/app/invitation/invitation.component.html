@@ -16,8 +16,8 @@
               <p>  {{place?.result.name}}  </p>
               <p><strong>Rating :</strong>{{place?.result.rating}}/5</p>
               <p><strong>Address :</strong> {{place?.result.vicinity}} </p>
-              <a class="btn btn-info pull-2" (click)="directions(place?.result.vicinity,event.Adr_Proposer)"> Itineraire</a><br>
-              <div *ngIf="Directions?.adr == place?.result.vicinity" >
+              <a class="btn btn-info pull-2" (click)="directions(place?.result.vicinity,event.Adr_Proposer,place?.place_id)"> Itineraire</a><br>
+              <div *ngIf="Directions?.adr == place?.result.place_id" >
                 <div *ngFor="let route of Directions?.routes">
                   <div *ngFor="let leg of route.legs">
                     <div>
@@ -61,7 +61,7 @@
       <p>La proposition que vous avez Proposer pour l'evenement :</p>
       <p><strong>Description :</strong> {{event?.Description}}</p>
       <p><strong>Date :</strong>{{event?.date}} </p>
-      <p class="alert alert-danger"> L'utilisateur {{ event.user_create.nom}} {{ event.user_create.prenom }} a réfusé<i (click)="DeleteParticipation(event.id)" class="icon-arrows-keyboard-deletes"></i> </p>
+      <p class="alert alert-danger"> L'utilisateur {{ event?.user_create.nom}} {{ event?.user_create.prenom }} a réfusé<i (click)="DeleteParticipation(event.id)" class="icon-arrows-keyboard-deletes"></i> </p>
     </div>
   </div>
   <hr>

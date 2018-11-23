@@ -11,7 +11,7 @@ import {ErrMessageService} from "../err-message.service";
 export class RegisterComponent implements OnInit {
   public myModelProperty: Array<any>;
   public myModeSex: String;
-  public centreIntTab: String[] = ['accounting', 'airport', 'amusement_park' , 'aquarium', 'art_gallery', 'atm'];
+  public centreIntTab: String[] = ['amusement_park', 'art_gallery', 'bar' , 'bowling_alley', 'art_gallery', 'gym','library','museum','night_club','park','restaurant','stadium','zoo'];
 
   constructor(
     private loginSrevice: LoginService,

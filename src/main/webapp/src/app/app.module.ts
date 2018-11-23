@@ -18,6 +18,7 @@ import { InvitationComponent } from './invitation/invitation.component';
 import { ProfilComponent } from './profil/profil.component';
 import { UsersComponent } from './users/users.component';
 import { AdminComponent } from './admin/admin.component';
+import {DecodeHtmlString} from "./DecodeHtmlString";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { AdminComponent } from './admin/admin.component';
     InvitationComponent,
     ProfilComponent,
     UsersComponent,
-    AdminComponent
+    AdminComponent,
+    DecodeHtmlString
   ],
   imports: [
     BrowserModule,

@@ -28,12 +28,14 @@
   <div class="form-group">
     <label class="col-md-12">Saisie votre Adresse pour l'evenement</label>
     <div class="col-md-12">
-      <input [formControl]="myControl" [matAutocomplete]="auto" type="text" #adr_prop class="form-control form-control-line"  >
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let option of addressService.address" [value]="option.Numero + option.Rue + option.Ville">
+      <div>
+        <input matInput [matAutocomplete]="auto" type="text" #adr_prop class="form-control form-control-line"  >
+        <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of addressService.address" [value]="option.Numero+' '+ option.Rue +' '+ option.Ville">
           {{option.Nom}}
         </mat-option>
       </mat-autocomplete>
+      </div>
       <a *ngIf="nbrpart.value > 2" (click)="getPlace(adr_prop.value,myModelProperty)"  class="btn btn-success">Chercher des places</a>
     </div>
   </div>
@@ -45,8 +47,8 @@
       <input type="Radio" [(ngModel)]="RadioModel" name="RadioMedel" [value]="place?.place_id">
       <a  class="text-info">  {{place?.name}}  </a> <span class="sl-item">{{place?.rating}}/5</span>
       <p><strong>Address :</strong> {{place?.vicinity}} </p>
-      <a class="btn btn-info pull-2" (click)="directions(place.vicinity,adr_prop.value)"> Itineraire</a><br>
-      <div *ngIf="Directions?.adr == place.vicinity" class="m-t-20 row" >
+      <a class="btn btn-info pull-2" (click)="directions(place.vicinity,adr_prop.value,place.place_id)"> Itineraire</a><br>
+      <div *ngIf="Directions?.adr == place.place_id" class="m-t-20 row" >
         <div *ngFor="let route of Directions?.routes">
           <div *ngFor="let leg of route.legs">
             <div>
@@ -78,5 +80,6 @@
     <div class="col-sm-12">
       <button class="btn btn-success" (click)="Addaevent(descri.value,nbrpart.value,date.value,myModelProperty,RadioModel,adr_prop.value)">Ajouter Evenement</button>
     </div>
+    <div *ngIf="AcceptMessage != null " class="alert alert-success">{{ AcceptMessage }}</div>
   </div>
 </div>

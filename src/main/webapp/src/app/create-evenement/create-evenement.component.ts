@@ -13,11 +13,10 @@ export class CreateEvenementComponent implements OnInit {
   AcceptMessage : String;
   ListPlace : any[];
   Directions : any;
-
-  centreIntTab: String[] = ['accounting', 'airport', 'amusement_park' , 'aquarium', 'art_gallery', 'atm'];
+  centreIntTab: String[] = ['amusement_park', 'art_gallery', 'bar' , 'bowling_alley', 'art_gallery', 'gym','library','museum','night_club','park','restaurant','stadium','zoo'];
   myModelProperty: String;
   RadioModel: String;
-  myControl = new FormControl();
+  myControl ;
   constructor(
    public evenService : EvenementService,
    public router: Router,
@@ -26,6 +25,7 @@ export class CreateEvenementComponent implements OnInit {
 
   ngOnInit() {
     this.evenService.clean();
+    this.myControl = new FormControl();
   }
   Addaevent(description: String,nbrParticipants: String,date: String,CentreInt: String,lieu: String,adr_proposer: String){
     if(lieu == undefined){
@@ -41,8 +41,8 @@ export class CreateEvenementComponent implements OnInit {
     this.evenService.getPlace(adr,type)
       .subscribe(data => this.ListPlace = data)
   }
-  directions(adr1: String,adr2: String){
-    this.evenService.directions(adr1,adr2)
+  directions(adr1: String,adr2: String,place_id: String){
+    this.evenService.directions(adr1,adr2,place_id)
       .subscribe(data => this.Directions = data)
   }
 

@@ -23,7 +23,7 @@ public class AddressService {
     }
     public void UpdateAddress(Address address,String nom,String numero, String rue, String ville, String codepostal,Users user) throws DataException {
         if(address.getUser() == user ){
-            throw new DataException("you don't have this Address");
+            throw new DataException("Vous avez pas d'addresse");
         }
         if(nom != null){
             address.setNom(nom);
@@ -44,14 +44,14 @@ public class AddressService {
 
         Address adr= DaoFactory.getAddressDao().selectUserOneAddress(user,nom);
         if(adr == null){
-            throw new DataException("you don't have this address");
+            throw new DataException("Vous avez pas cette addresse");
         }
         DaoFactory.getAddressDao().remove(adr);
     }
     public List<Address> getUserAddress(Users user) throws DataException {
         List<Address> adr = DaoFactory.getAddressDao().selectUser(user);
         if(adr == null || adr.isEmpty()){
-            throw new DataException("You don't have any Address");
+            throw new DataException("Vous avez pas d'addresse");
         }
         return adr;
     }

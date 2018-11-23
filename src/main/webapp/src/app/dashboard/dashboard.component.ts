@@ -15,7 +15,6 @@ export class DashboardComponent implements OnInit {
               public eventService: EvenementService) { }
 
   ngOnInit() {
-    this.getSession();
   }
   getSession(): void {
     this.dashboardService.getSession()

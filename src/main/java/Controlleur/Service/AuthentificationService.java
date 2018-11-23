@@ -91,14 +91,14 @@ public class AuthentificationService {
     public Users CurrentUser(HttpServletRequest request) throws DataException {
         HttpSession session = request.getSession(true);
         if(session.isNew() || session.getAttribute("Email") == null){
-        throw new DataException("You are not connecting");
+        throw new DataException("Vous etes pas connecte");
         }
         Users user =  DaoFactory.getUsersDao().GetUserByEmail((String) session.getAttribute("Email"));
         if(user == null){
-            throw new DataException("User not exist");
+            throw new DataException("Utilisateur n'exciste pas");
         }
         if(user.getEtat().equals(Users.Etat.Suspendu)){
-            throw new DataException("you are Suspendu");
+            throw new DataException("Compte supprimer ");
         }
         return user;
     }

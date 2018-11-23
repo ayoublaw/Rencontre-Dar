@@ -1,20 +1,20 @@
 <div *ngIf="MessageAcc != null" class=" label label-success">{{MessageAcc}}</div>
 <div class="row">
-  <div class="col-md-3 col-xs-6 b-r"> <strong>Full Name</strong>
+  <div class="col-md-3 col-xs-6 b-r"> <strong>Nom </strong>
     <br>
-    <p class="text-muted">Johnathan Deo</p>
+    <p class="text-muted">{{currentUser?.nom}} </p>
   </div>
-  <div class="col-md-3 col-xs-6 b-r"> <strong>Mobile</strong>
+  <div class="col-md-3 col-xs-6"> <strong>Prenom</strong>
     <br>
-    <p class="text-muted">(123) 456 7890</p>
+    <p class="text-muted">{{currentUser?.prenom}}</p>
   </div>
   <div class="col-md-3 col-xs-6 b-r"> <strong>Email</strong>
     <br>
-    <p class="text-muted">johnathan@admin.com</p>
+    <p class="text-muted">{{currentUser?.email}}</p>
   </div>
-  <div class="col-md-3 col-xs-6"> <strong>Location</strong>
+  <div class="col-md-3 col-xs-6"> <strong>Age</strong>
     <br>
-    <p class="text-muted">London</p>
+    <p class="text-muted">{{currentUser?.age}}</p>
   </div>
 </div>
 <hr>

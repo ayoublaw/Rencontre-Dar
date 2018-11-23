@@ -41,9 +41,9 @@ export class InvitationComponent implements OnInit {
     return this.eventService.PlaceDetails(id)
       .subscribe(data => this.PlaceDeatils.push(data))
   }
-  directions(adr1: String,adr2: String){
+  directions(adr1: String,adr2: String,place_id: String){
     this.Directions = null;
-    this.eventService.directions(adr1,adr2)
+    this.eventService.directions(adr1,adr2,place_id)
       .subscribe(data => this.Directions = data)
   }
   AccepteOrRefuse(evenementID: number, b: Boolean){
