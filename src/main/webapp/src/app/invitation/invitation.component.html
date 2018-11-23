@@ -10,8 +10,8 @@
         <div *ngFor="let place of PlaceDeatils" class="m-t-20 row">
           <div *ngIf="event?.Lieu == place?.result.place_id">
             <div class="col-md-4 col-xs-12">
-              <img *ngIf="place.result.photos != null" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={{place.result.photos[0]?.photo_reference}}&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es" alt="user" class="img-responsive" style="height: 150px;width: 150px"  />
-              <img *ngIf="place.result.photos == null" src="../../assets/image-not-found-1.png" alt="user" class="img-responsive" style="height: 150px;width: 150px"  /></div>
+              <img *ngIf="place.result?.photos != null" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={{place.result.photos[0]?.photo_reference}}&key=AIzaSyCCP9mY6YG5WyvRqftQQdavXQW6Rm4u9es" alt="user" class="img-responsive" style="height: 150px;width: 150px"  />
+              <img *ngIf="place.result?.photos == null" src="../../assets/image-not-found-1.png" alt="user" class="img-responsive" style="height: 150px;width: 150px"  /></div>
             <div class="col-md-8 col-xs-12">
               <p>  {{place?.result.name}}  </p>
               <p><strong>Rating :</strong>{{place?.result.rating}}/5</p>

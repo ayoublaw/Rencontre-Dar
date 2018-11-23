@@ -21,50 +21,48 @@ public class Dao<E> implements IDao<E> {
 
     public void Save(E entity) {
         SessionFactory factory = HibernateUtil.getSessionFactory();
-        Session s = factory.getCurrentSession();
+        Session s = factory.openSession();
         s.beginTransaction();
         s.save(entity);
         s.getTransaction().commit();
-        factory.close();
+        s.close();
     }
     public E getById(Serializable id) {
         SessionFactory factory = HibernateUtil.getSessionFactory();
-        Session s = factory.getCurrentSession();
+        Session s = factory.openSession();
         s.beginTransaction();
         E entity = (E) s.get(clazz, id);
         s.getTransaction().commit();
-        factory.close();
+        s.close();
         return entity;
     }
     public E update(E entity) {
         SessionFactory factory = HibernateUtil.getSessionFactory();
-        Session s = factory.getCurrentSession();
+        Session s = factory.openSession();
         s.beginTransaction();
         s.update(entity);
         s.getTransaction().commit();
-        factory.close();
+        s.close();
         return null;
     }
 
     @Override
     public E remove(E e) {
         SessionFactory factory = HibernateUtil.getSessionFactory();
-        Session s = factory.getCurrentSession();
+        Session s = factory.openSession();
         s.beginTransaction();
         s.delete(e);
         s.getTransaction().commit();
-        factory.close();
+        s.close();
         return e;
     }
     @Override
     public List<E> selectAll() {
         SessionFactory factory = HibernateUtil.getSessionFactory();
-        Session s = factory.getCurrentSession();
-        s.beginTransaction();
+        Session s = factory.openSession();
         Query q = s.createQuery("from " + clazz.getSimpleName());
         List<E> list = q.list();
-        s.getTransaction().commit();
-        factory.close();
+        s.close();
         return list;
     }
 

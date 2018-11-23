@@ -17,11 +17,11 @@ public class EvenementParticipantDao extends Dao<Evenement_Participant> {
     }
     public Evenement_Participant getEvenementParticipantFromEvenementAndUser(Evenement ev,Users user){
         SessionFactory factory = HibernateUtil.getSessionFactory();
-        Session s = factory.getCurrentSession();
+        Session s = factory.openSession();
         Query q = s.createQuery("select t from " + Evenement_Participant.class.getSimpleName()+" t where evenemrnt = :x and user = :y");
         q.setParameter("x",ev.getId()).setParameter("y",user.getId());
         Evenement_Participant list = (Evenement_Participant) q.list().get(0);
-        factory.close();
+        s.close();
         return list;
     }
 }
