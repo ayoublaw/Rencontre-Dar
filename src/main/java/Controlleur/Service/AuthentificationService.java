@@ -22,6 +22,9 @@ public class AuthentificationService {
         {
             throw new DataException("Email or Username Invalid");
         }
+        if(user.getEtat().equals(Users.Etat.Suspendu)){
+            throw new DataException("Compte Supprimer");
+        }
         System.out.println(user);
         return user;
     }

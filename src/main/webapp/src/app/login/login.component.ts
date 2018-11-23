@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           console.log('Erreur :' +this.MessageErr.message);
-          if(this.MessageErr.message == 'Email or Username Invalid' || this.MessageErr.message === undefined){
+          if(this.MessageErr.message == 'Email or Username Invalid' || this.MessageErr.message == 'Compte Supprimer'){
             this.router.navigate(['/login'])
           }
           else {
