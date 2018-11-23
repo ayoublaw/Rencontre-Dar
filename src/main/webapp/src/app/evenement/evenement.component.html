@@ -36,7 +36,7 @@
             </mat-autocomplete>
           </div>
           <div class="col-md-2 col-xs-12" >
-            <a (click)="directions(event.Adr_Proposer,AdrCherchehaut.value,place.place_id)"  class="btn btn-info">Iteniraire </a>
+            <a (click)="directions(event.Adr_Proposer,AdrCherchehaut.value,event.Lieu)"  class="btn btn-info">Iteniraire </a>
           </div>
         </div>
       <div *ngIf="Directions?.adr == place.place_id" >
